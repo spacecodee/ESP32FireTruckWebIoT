@@ -1,21 +1,6 @@
 import { Injectable } from '@angular/core';
 import { WebSocketSubject } from 'rxjs/webSocket';
-
-type Direction =
-  | 'forward'
-  | 'backward'
-  | 'left'
-  | 'right'
-  | 'forward-left'
-  | 'forward-right'
-  | 'backward-left'
-  | 'backward-right'
-  | 'stop';
-
-interface TruckCommand {
-  command: 'move' | 'pump';
-  value: Direction | boolean;
-}
+import { Direction, TruckCommand } from '../types/truck.types';
 
 @Injectable({
   providedIn: 'root',

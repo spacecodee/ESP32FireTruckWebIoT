@@ -1,17 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TruckControlService } from '../../../services/truck-control.service';
-
-type Direction =
-  | 'forward'
-  | 'backward'
-  | 'left'
-  | 'right'
-  | 'forward-left'
-  | 'forward-right'
-  | 'backward-left'
-  | 'backward-right'
-  | 'stop';
+import { Direction } from '../../../types/truck.types';
 
 @Component({
   selector: 'app-movement-pad',
