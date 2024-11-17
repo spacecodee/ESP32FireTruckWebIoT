@@ -1,0 +1,108 @@
+<!-- movement-pad.component.html -->
+<div class="flex flex-col items-center gap-8">
+  <!-- Top Row -->
+  <div class="flex gap-4">
+    <button
+      (mousedown)="onDirectionStart('forward-left')"
+      (mouseup)="onDirectionEnd()"
+      (touchstart)="onDirectionStart('forward-left')"
+      (touchend)="onDirectionEnd()"
+      [class.bg-blue-700]="activeDirection === 'forward-left'"
+      class="w-16 h-16 rounded-full bg-blue-500 hover:bg-blue-600 active:scale-95 text-white flex items-center justify-center transition-all duration-200"
+    >
+      <i class="fas fa-arrow-up transform -rotate-45"></i>
+    </button>
+
+    <button
+      (mousedown)="onDirectionStart('forward')"
+      (mouseup)="onDirectionEnd()"
+      (touchstart)="onDirectionStart('forward')"
+      (touchend)="onDirectionEnd()"
+      [class.bg-blue-700]="activeDirection === 'forward'"
+      class="w-16 h-16 rounded-full bg-blue-500 hover:bg-blue-600 active:scale-95 text-white flex items-center justify-center transition-all duration-200"
+    >
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <button
+      (mousedown)="onDirectionStart('forward-right')"
+      (mouseup)="onDirectionEnd()"
+      (touchstart)="onDirectionStart('forward-right')"
+      (touchend)="onDirectionEnd()"
+      [class.bg-blue-700]="activeDirection === 'forward-right'"
+      class="w-16 h-16 rounded-full bg-blue-500 hover:bg-blue-600 active:scale-95 text-white flex items-center justify-center transition-all duration-200"
+    >
+      <i class="fas fa-arrow-up transform rotate-45"></i>
+    </button>
+  </div>
+
+  <!-- Middle Row -->
+  <div class="flex gap-16">
+    <button
+      (mousedown)="onDirectionStart('left')"
+      (mouseup)="onDirectionEnd()"
+      (touchstart)="onDirectionStart('left')"
+      (touchend)="onDirectionEnd()"
+      [class.bg-blue-700]="activeDirection === 'left'"
+      class="w-16 h-16 rounded-full bg-blue-500 hover:bg-blue-600 active:scale-95 text-white flex items-center justify-center transition-all duration-200"
+    >
+      <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <!-- Water Pump -->
+    <button
+      (click)="togglePump()"
+      [class.bg-emerald-700]="isPumpActive"
+      class="w-16 h-16 rounded-full bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white flex items-center justify-center transition-all duration-200"
+    >
+      <i class="fas fa-tint"></i>
+    </button>
+
+    <button
+      (mousedown)="onDirectionStart('right')"
+      (mouseup)="onDirectionEnd()"
+      (touchstart)="onDirectionStart('right')"
+      (touchend)="onDirectionEnd()"
+      [class.bg-blue-700]="activeDirection === 'right'"
+      class="w-16 h-16 rounded-full bg-blue-500 hover:bg-blue-600 active:scale-95 text-white flex items-center justify-center transition-all duration-200"
+    >
+      <i class="fas fa-arrow-right"></i>
+    </button>
+  </div>
+
+  <!-- Bottom Row -->
+  <div class="flex gap-4">
+    <button
+      (mousedown)="onDirectionStart('backward-left')"
+      (mouseup)="onDirectionEnd()"
+      (touchstart)="onDirectionStart('backward-left')"
+      (touchend)="onDirectionEnd()"
+      [class.bg-blue-700]="activeDirection === 'backward-left'"
+      class="w-16 h-16 rounded-full bg-blue-500 hover:bg-blue-600 active:scale-95 text-white flex items-center justify-center transition-all duration-200"
+    >
+      <i class="fas fa-arrow-down transform rotate-45"></i>
+    </button>
+
+    <button
+      (mousedown)="onDirectionStart('backward')"
+      (mouseup)="onDirectionEnd()"
+      (touchstart)="onDirectionStart('backward')"
+      (touchend)="onDirectionEnd()"
+      [class.bg-blue-700]="activeDirection === 'backward'"
+      class="w-16 h-16 rounded-full bg-blue-500 hover:bg-blue-600 active:scale-95 text-white flex items-center justify-center transition-all duration-200"
+    >
+      <i class="fas fa-arrow-down"></i>
+    </button>
+
+    <button
+      (mousedown)="onDirectionStart('backward-right')"
+      (mouseup)="onDirectionEnd()"
+      (touchstart)="onDirectionStart('backward-right')"
+      (touchend)="onDirectionEnd()"
+      [class.bg-blue-700]="activeDirection === 'backward-right'"
+      class="w-16 h-16 rounded-full bg-blue-500 hover:bg-blue-600 active:scale-95 text-white flex items-center justify-center transition-all duration-200"
+    >
+      <i class="fas fa-arrow-down transform -rotate-45"></i>
+    </button>
+  </div>
+</div>

@@ -1,19 +1,12 @@
+// view/pages/dashboard/dashboard.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MovementPadComponent } from '../../../features/fire-truck/components/controls/movement-pad/movement-pad.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MovementPadComponent],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss',
 })
-export class DashboardComponent {
-  controlCar(direction: 'forward' | 'backward' | 'left' | 'right'): void {
-    console.log(`Moving car: ${direction}`);
-  }
-
-  toggleWaterPump(): void {
-    console.log('Toggling water pump');
-  }
-}
+export class DashboardComponent {}

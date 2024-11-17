@@ -1,52 +1,28 @@
-<div class="min-h-screen bg-gray-50 flex items-center justify-center">
-  <div class="bg-white p-8 rounded-2xl shadow-lg">
-    <!-- Control Group -->
-    <div class="flex flex-col items-center gap-4 mb-8">
-      <!-- Forward -->
-      <button
-        (click)="controlCar('forward')"
-        class="w-16 h-16 rounded-full bg-blue-500 hover:bg-blue-600 active:scale-95 text-white flex items-center justify-center transition-all duration-200"
-        aria-label="Forward"
-      >
-        <i class="fas fa-arrow-up text-2xl"></i>
-      </button>
-
-      <!-- Middle Row -->
-      <div class="flex gap-16">
-        <button
-          (click)="controlCar('left')"
-          class="w-16 h-16 rounded-full bg-blue-500 hover:bg-blue-600 active:scale-95 text-white flex items-center justify-center transition-all duration-200"
-          aria-label="Left"
-        >
-          <i class="fas fa-arrow-left text-2xl"></i>
-        </button>
-
-        <button
-          (click)="controlCar('right')"
-          class="w-16 h-16 rounded-full bg-blue-500 hover:bg-blue-600 active:scale-95 text-white flex items-center justify-center transition-all duration-200"
-          aria-label="Right"
-        >
-          <i class="fas fa-arrow-right text-2xl"></i>
-        </button>
-      </div>
-
-      <!-- Backward -->
-      <button
-        (click)="controlCar('backward')"
-        class="w-16 h-16 rounded-full bg-blue-500 hover:bg-blue-600 active:scale-95 text-white flex items-center justify-center transition-all duration-200"
-        aria-label="Backward"
-      >
-        <i class="fas fa-arrow-down text-2xl"></i>
-      </button>
+<!-- view/pages/dashboard/dashboard.component.html -->
+<div class="min-h-screen bg-slate-100">
+  <!-- Header -->
+  <header class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 py-4">
+      <h1 class="text-2xl font-bold text-gray-900">Fire Truck Control</h1>
     </div>
+  </header>
 
-    <!-- Water Pump -->
-    <button
-      (click)="toggleWaterPump()"
-      class="w-16 h-16 rounded-full bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white flex items-center justify-center transition-all duration-200 mx-auto"
-      aria-label="Toggle Water Pump"
-    >
-      <i class="fas fa-tint text-2xl"></i>
-    </button>
-  </div>
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Control Section -->
+      <section class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-lg font-semibold text-gray-800 mb-4">
+          Movement Controls
+        </h2>
+        <app-movement-pad></app-movement-pad>
+      </section>
+
+      <!-- Status Section -->
+      <section class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-lg font-semibold text-gray-800 mb-4">Status</h2>
+        <!-- Add status components here later -->
+      </section>
+    </div>
+  </main>
 </div>
