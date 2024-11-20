@@ -5,3 +5,8 @@ export interface TruckCommand {
   command: 'move' | 'pump';
   value: Direction | boolean;
 }
+
+export interface ESP32Message {
+  connected?: boolean;
+  // Add other message fields as needed
+}
