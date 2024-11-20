@@ -2,7 +2,7 @@
 <div class="flex gap-4">
   <button
     (click)="toggleLed('red')"
-    [class]="redLedState ? 'bg-red-500' : 'bg-gray-400 dark:bg-gray-600'"
+    [class]="ledStates.red ? 'bg-red-500' : 'bg-gray-400 dark:bg-gray-600'"
     class="w-16 h-16 rounded-full hover:opacity-80 active:scale-95 text-white flex items-center justify-center transition-all duration-200"
   >
     <i class="fas fa-lightbulb"></i>
@@ -10,7 +10,7 @@
 
   <button
     (click)="toggleLed('green')"
-    [class]="greenLedState ? 'bg-green-500' : 'bg-gray-400 dark:bg-gray-600'"
+    [class]="ledStates.green ? 'bg-green-500' : 'bg-gray-400 dark:bg-gray-600'"
     class="w-16 h-16 rounded-full hover:opacity-80 active:scale-95 text-white flex items-center justify-center transition-all duration-200"
   >
     <i class="fas fa-lightbulb"></i>

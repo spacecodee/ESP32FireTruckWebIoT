@@ -1,19 +1,19 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TruckControlService } from '@features/fire-truck/services/truck-control.service';
 import { Subscription } from 'rxjs';
-import { TruckControlService } from '../../../services/truck-control.service';
+import { Direction } from '@features/fire-truck/types/truck.types';
 
 @Component({
   selector: 'app-truck-status',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './truck-status.component.html',
-  styleUrl: './truck-status.component.scss',
 })
 export class TruckStatusComponent implements OnInit, OnDestroy {
   isConnected = false;
-  currentDirection = 'stop';
-  batteryLevel = 85; // Simulated for now
+  currentDirection: Direction = 'stop';
+  batteryLevel = 85; // Simulated value
   isPumpActive = false;
   private subscription?: Subscription;
 
@@ -21,7 +21,7 @@ export class TruckStatusComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription = this.truckControl.connectionStatus$.subscribe(
-      (status) => (this.isConnected = status),
+      (status: boolean) => (this.isConnected = status),
     );
   }
 

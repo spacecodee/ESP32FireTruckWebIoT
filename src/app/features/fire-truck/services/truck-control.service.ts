@@ -1,7 +1,13 @@
 import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { BehaviorSubject } from 'rxjs';
-import { Direction, TruckCommand, ESP32Message } from '../types/truck.types';
+import {
+  Direction,
+  WSMessage,
+  MoveCommand,
+  PumpCommand,
+  LedCommand,
+} from '../types/truck.types';
 import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
@@ -9,11 +15,17 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class TruckControlService {
   private platformId = inject(PLATFORM_ID);
-  private socket$?: WebSocketSubject<TruckCommand | ESP32Message>;
+  private socket$?: WebSocketSubject<WSMessage>;
   private readonly WS_ENDPOINT = 'ws://192.168.215.3:81';
 
   private connectionStatus = new BehaviorSubject<boolean>(false);
   connectionStatus$ = this.connectionStatus.asObservable();
+
+  private ledStatus = new BehaviorSubject<{ red: boolean; green: boolean }>({
+    red: false,
+    green: false,
+  });
+  ledStatus$ = this.ledStatus.asObservable();
 
   constructor() {
     if (isPlatformBrowser(this.platformId)) {
@@ -21,66 +33,44 @@ export class TruckControlService {
     }
   }
 
-  private initializeWebSocket(): void {
-    this.socket$ = new WebSocketSubject({
-      url: this.WS_ENDPOINT,
-      openObserver: {
-        next: () => {
-          console.log('%c🔌 WebSocket Connected', 'color: #10b981');
-          this.connectionStatus.next(true);
-        },
-      },
-      closeObserver: {
-        next: () => {
-          console.log('%c🔌 WebSocket Disconnected', 'color: #ef4444');
-          this.connectionStatus.next(false);
-        },
-      },
-    });
-
-    this.socket$.subscribe({
-      next: (message) => {
-        if ('connected' in message) {
-          this.connectionStatus.next(message.connected || false);
-        }
-      },
-      error: (error) => {
-        console.error('%c❌ WebSocket Error:', 'color: #ef4444', error);
-        this.connectionStatus.next(false);
-      },
-    });
-  }
-
   move(direction: Direction): void {
     if (!isPlatformBrowser(this.platformId)) return;
-
-    this.socket$?.next({
-      command: 'move',
-      value: direction,
-    });
+    const command: MoveCommand = { command: 'move', direction };
+    this.socket$?.next(command);
   }
 
-  setPump(active: boolean): void {
+  setPump(state: boolean): void {
     if (!isPlatformBrowser(this.platformId)) return;
-
-    this.socket$?.next({
-      command: 'pump',
-      value: active,
-    });
+    const command: PumpCommand = { command: 'pump', state };
+    this.socket$?.next(command);
   }
 
   setLed(led: 'red' | 'green', state: boolean): void {
     if (!isPlatformBrowser(this.platformId)) return;
-
-    this.socket$?.next({
-      command: 'led',
-      value: { led, state },
-    });
+    const command: LedCommand = { command: 'led', led, state };
+    this.socket$?.next(command);
   }
 
   disconnect(): void {
     if (!isPlatformBrowser(this.platformId)) return;
-
     this.socket$?.complete();
+  }
+
+  private initializeWebSocket(): void {
+    this.socket$ = new WebSocketSubject<WSMessage>({
+      url: this.WS_ENDPOINT,
+      deserializer: (msg) => JSON.parse(msg.data),
+      serializer: (msg) => JSON.stringify(msg),
+    });
+
+    this.socket$.subscribe({
+      next: (message) => {
+        if ('type' in message && message.type === 'status') {
+          this.ledStatus.next(message.leds);
+          console.log('%c📡 LED Status:', 'color: #3b82f6', message.leds);
+        }
+      },
+      error: console.error,
+    });
   }
 }
