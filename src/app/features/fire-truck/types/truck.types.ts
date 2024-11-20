@@ -37,6 +37,13 @@ export interface ESP32Status {
   };
 }
 
+// Add new interface for LED status
+export interface LedStatus {
+  type: 'status';
+  led_red: boolean;
+  led_green: boolean;
+}
+
 export interface ServoStatus {
   type: 'servo_status';
   position: number;
@@ -47,4 +54,5 @@ export interface ConnectionMessage {
   connected: boolean;
 }
 
-export type WSMessage = WSCommand | ESP32Status | ServoStatus;
+// Update WSMessage type
+export type WSMessage = WSCommand | LedStatus | ConnectionMessage | ServoStatus;
