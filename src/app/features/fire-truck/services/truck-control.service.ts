@@ -69,6 +69,15 @@ export class TruckControlService {
     });
   }
 
+  setLed(led: 'red' | 'green', state: boolean): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    this.socket$?.next({
+      command: 'led',
+      value: { led, state },
+    });
+  }
+
   disconnect(): void {
     if (!isPlatformBrowser(this.platformId)) return;
 
