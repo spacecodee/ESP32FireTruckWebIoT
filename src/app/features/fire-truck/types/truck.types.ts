@@ -19,9 +19,6 @@ export interface LedCommand {
 
 export interface ServoCommand {
   command: 'servo';
-  type: 'sweep';
-  startAngle: number;
-  endAngle: number;
 }
 
 export type WSCommand = MoveCommand | PumpCommand | LedCommand | ServoCommand;
@@ -41,9 +38,8 @@ export interface ESP32Status {
 }
 
 export interface ServoStatus {
-  type: 'status';
-  servo_angle: number;
-  direction: string;
+  type: 'servo_status';
+  position: number;
 }
 
 export interface ConnectionMessage {

@@ -1,28 +1,32 @@
 import { Injectable } from '@angular/core';
 import { WebSocketService } from '@core/services/websocket/websocket.service';
 import { BehaviorSubject } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { ServoStatus } from '../types/truck.types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ServoControlService {
-  private servoStatus = new BehaviorSubject<{
-    angle: number;
-    direction: string;
-  }>({
-    angle: 0,
-    direction: 'stop',
-  });
-  servoStatus$ = this.servoStatus.asObservable();
+  private servoPosition = new BehaviorSubject<number>(0);
+  servoPosition$ = this.servoPosition.asObservable();
 
-  constructor(private ws: WebSocketService) {}
+  constructor(private ws: WebSocketService) {
+    this.ws.messages$
+      .pipe(
+        filter(
+          (message): message is ServoStatus =>
+            message !== null &&
+            'type' in message &&
+            message.type === 'servo_status',
+        ),
+      )
+      .subscribe((message) => {
+        this.servoPosition.next(message.position);
+      });
+  }
 
-  sweep(startAngle: number, endAngle: number): void {
-    this.ws.sendMessage({
-      command: 'servo',
-      type: 'sweep',
-      startAngle,
-      endAngle,
-    });
+  startSweep(): void {
+    this.ws.sendMessage({ command: 'servo' });
   }
 }

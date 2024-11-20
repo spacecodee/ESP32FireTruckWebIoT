@@ -9,9 +9,11 @@ import { ServoControlService } from '@features/fire-truck/services/servo-control
   templateUrl: './servo-control.component.html',
 })
 export class ServoControlComponent {
+  servoPosition$ = this.servoControl.servoPosition$;
+
   constructor(private servoControl: ServoControlService) {}
 
-  sweep(startAngle: number, endAngle: number): void {
-    this.servoControl.sweep(startAngle, endAngle);
+  startSweep(): void {
+    this.servoControl.startSweep();
   }
 }

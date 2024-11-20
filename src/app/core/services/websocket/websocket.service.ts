@@ -3,20 +3,25 @@ import { WebSocketSubject, webSocket } from 'rxjs/webSocket';
 import { BehaviorSubject, timer } from 'rxjs';
 import { retry, tap } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
-import { ConnectionMessage } from '@features/fire-truck/types/truck.types';
+import {
+  ConnectionMessage,
+  ServoStatus,
+} from '@features/fire-truck/types/truck.types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WebSocketService {
   private platformId = inject(PLATFORM_ID);
-  private socket$?: WebSocketSubject<ConnectionMessage>;
+  private socket$?: WebSocketSubject<ConnectionMessage | ServoStatus>;
   private readonly WS_ENDPOINT = 'ws://192.168.215.3:81';
   private previousConnectionState = false;
   private readonly RETRY_SECONDS = 3;
 
   private connectionStatus = new BehaviorSubject<boolean>(false);
   connectionStatus$ = this.connectionStatus.asObservable();
+  private messages = new BehaviorSubject<any>(null);
+  messages$ = this.messages.asObservable();
 
   constructor() {
     if (isPlatformBrowser(this.platformId)) {
@@ -27,7 +32,7 @@ export class WebSocketService {
   private initializeWebSocket(): void {
     console.log('%c🔌 Attempting to connect...', 'color: #3b82f6');
 
-    this.socket$ = webSocket<ConnectionMessage>({
+    this.socket$ = webSocket<ConnectionMessage | ServoStatus>({
       url: this.WS_ENDPOINT,
       deserializer: (msg) => JSON.parse(msg.data),
       serializer: (msg) => JSON.stringify(msg),
@@ -52,8 +57,10 @@ export class WebSocketService {
         }),
       )
       .subscribe({
-        next: (message: ConnectionMessage) => {
+        next: (message: ConnectionMessage | ServoStatus) => {
+          this.messages.next(message); // Forward messages to subscribers
           if (
+            'connected' in message &&
             message.type === 'connection' &&
             message.connected !== this.previousConnectionState
           ) {
