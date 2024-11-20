@@ -46,4 +46,9 @@ export interface ServoStatus {
   direction: string;
 }
 
+export interface ConnectionMessage {
+  type: 'connection';
+  connected: boolean;
+}
+
 export type WSMessage = WSCommand | ESP32Status | ServoStatus;
