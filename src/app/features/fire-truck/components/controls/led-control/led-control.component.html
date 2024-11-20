@@ -1,18 +1,32 @@
 <!-- src/app/features/fire-truck/components/controls/led-control.component.html -->
 <div class="flex gap-4">
+  <!-- Red LED -->
   <button
     (click)="toggleLed('red')"
-    [class]="ledStates.red ? 'bg-red-500' : 'bg-gray-400 dark:bg-gray-600'"
-    class="w-16 h-16 rounded-full hover:opacity-80 active:scale-95 text-white flex items-center justify-center transition-all duration-200"
+    [class]="
+      ledStates.red
+        ? 'bg-red-500 ring-2 ring-red-300 shadow-lg shadow-red-500/50'
+        : 'bg-red-500/20 dark:bg-red-500/10 hover:bg-red-500/30'
+    "
+    class="w-16 h-16 rounded-full active:scale-95 text-white flex items-center justify-center transition-all duration-300"
+    aria-label="Toggle red LED"
+    [attr.aria-pressed]="ledStates.red"
   >
-    <i class="fas fa-lightbulb"></i>
+    <i class="fas fa-lightbulb" [class.opacity-50]="!ledStates.red"></i>
   </button>
 
+  <!-- Green LED -->
   <button
     (click)="toggleLed('green')"
-    [class]="ledStates.green ? 'bg-green-500' : 'bg-gray-400 dark:bg-gray-600'"
-    class="w-16 h-16 rounded-full hover:opacity-80 active:scale-95 text-white flex items-center justify-center transition-all duration-200"
+    [class]="
+      ledStates.green
+        ? 'bg-green-500 ring-2 ring-green-300 shadow-lg shadow-green-500/50'
+        : 'bg-green-500/20 dark:bg-green-500/10 hover:bg-green-500/30'
+    "
+    class="w-16 h-16 rounded-full active:scale-95 text-white flex items-center justify-center transition-all duration-300"
+    aria-label="Toggle green LED"
+    [attr.aria-pressed]="ledStates.green"
   >
-    <i class="fas fa-lightbulb"></i>
+    <i class="fas fa-lightbulb" [class.opacity-50]="!ledStates.green"></i>
   </button>
 </div>

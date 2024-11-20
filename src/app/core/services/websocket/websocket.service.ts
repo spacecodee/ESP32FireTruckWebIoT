@@ -10,6 +10,7 @@ export class WebSocketService {
   private platformId = inject(PLATFORM_ID);
   private socket$?: WebSocketSubject<any>;
   private readonly WS_ENDPOINT = 'ws://192.168.215.3:81';
+  private previousConnectionState = false;
 
   private connectionStatus = new BehaviorSubject<boolean>(false);
   connectionStatus$ = this.connectionStatus.asObservable();
@@ -29,18 +30,22 @@ export class WebSocketService {
 
     this.socket$.subscribe({
       next: (message) => {
-        if (message.connected !== undefined) {
+        if (
+          message.connected !== undefined &&
+          message.connected !== this.previousConnectionState
+        ) {
           this.connectionStatus.next(message.connected);
+          this.previousConnectionState = message.connected;
           console.log(
-            '%c📡 Connection Status:',
-            'color: #3b82f6',
-            message.connected,
+            `%c📡 Connection ${message.connected ? 'Established' : 'Lost'}`,
+            `color: ${message.connected ? '#10b981' : '#ef4444'}`,
           );
         }
       },
       error: (error) => {
         console.error('%c❌ Connection Error:', 'color: #ef4444', error);
         this.connectionStatus.next(false);
+        this.previousConnectionState = false;
       },
     });
   }
