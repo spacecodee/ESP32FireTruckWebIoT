@@ -33,7 +33,6 @@ export class WebSocketService {
       serializer: (msg) => JSON.stringify(msg),
       openObserver: {
         next: () => {
-          console.log('WebSocket connection opened' + this.WS_ENDPOINT);
           console.log('%c🔌 WebSocket connection opened', 'color: #10b981');
         },
       },
@@ -49,8 +48,8 @@ export class WebSocketService {
       .pipe(
         retry({
           delay: (error, retryCount) => {
-            console.error('%c❌ Connection Error:', 'color: #ef4444', error);
-            console.log('%c🔄 Retrying connection...', 'color: #3b82f6');
+            //console.error('%c❌ Connection Error:', 'color: #ef4444', error);
+            //console.log('%c🔄 Retrying connection...', 'color: #3b82f6');
             return timer(this.RETRY_SECONDS * 1000);
           },
         }),
@@ -62,17 +61,12 @@ export class WebSocketService {
       .subscribe({
         next: (message: ConnectionMessage) => {
           this.logMessage(message);
-          // Add specific handling for connection type
           if (
             message.type === 'connection' &&
             message.connected !== this.previousConnectionState
           ) {
             this.connectionStatus.next(message.connected);
             this.previousConnectionState = message.connected;
-            console.log(
-              `%c📡 Connection ${message.connected ? 'Established' : 'Lost'}`,
-              `color: ${message.connected ? '#10b981' : '#ef4444'}`,
-            );
           }
         },
         error: (error) => {
@@ -91,45 +85,14 @@ export class WebSocketService {
     });
   }
 
-  private logMessage(message: any) {
+  private logMessage(message: ConnectionMessage) {
     const timestamp = new Date().toLocaleTimeString();
+    const style = message.connected ? 'color: #10b981' : 'color: #ef4444';
 
-    switch (message.type) {
-      case 'connection':
-        console.log(
-          `%c[${timestamp}] 📡 Connection Status:`,
-          'color: #3b82f6',
-          message,
-        );
-        break;
-
-      case 'led':
-        console.log(
-          `%c[${timestamp}] 💡 LED Update:`,
-          'color: #10b981',
-          message,
-        );
-        console.table({
-          led: message.led,
-          state: message.state,
-        });
-        break;
-
-      case 'servo':
-        console.log(
-          `%c[${timestamp}] 🔄 Servo Status:`,
-          'color: #8b5cf6',
-          message,
-        );
-        console.table({
-          angle: message.servo_angle,
-          direction: message.direction,
-        });
-        break;
-
-      default:
-        console.log(`%c[${timestamp}] ℹ️ Message:`, 'color: #6b7280', message);
-    }
+    console.log(`%c[${timestamp}] 📡 ESP32:`, style, {
+      type: message.type,
+      connected: message.connected,
+    });
   }
 
   sendMessage(message: any): void {
