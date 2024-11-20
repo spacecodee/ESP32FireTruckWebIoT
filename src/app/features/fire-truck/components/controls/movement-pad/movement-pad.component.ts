@@ -2,6 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Direction } from '@app/features/fire-truck/types/truck.types';
 import { TruckControlService } from '@app/features/fire-truck/services/truck-control.service';
+import { WebSocketService } from '@core/services/websocket/websocket.service';
 
 @Component({
   selector: 'app-movement-pad',
@@ -13,7 +14,10 @@ export class MovementPadComponent implements OnDestroy {
   activeDirection: Direction = 'stop';
   isPumpActive = false;
 
-  constructor(private truckControl: TruckControlService) {}
+  constructor(
+    private truckControl: TruckControlService,
+    private ws: WebSocketService,
+  ) {}
 
   onDirectionStart(direction: Direction): void {
     this.activeDirection = direction;
@@ -43,7 +47,7 @@ export class MovementPadComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.truckControl.disconnect();
+    this.ws.disconnect();
     console.log(
       '%c📡 Connection closed',
       'background: #6b7280; color: white; padding: 2px 6px; border-radius: 4px;',

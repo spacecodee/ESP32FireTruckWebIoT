@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+// src/app/features/fire-truck/components/controls/led-control.component.ts
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TruckControlService } from '@features/fire-truck/services/truck-control.service';
-import { Subscription } from 'rxjs';
+import { LedControlService } from '@features/fire-truck/services/led-control.service';
 
 @Component({
   selector: 'app-led-control',
@@ -9,23 +9,13 @@ import { Subscription } from 'rxjs';
   imports: [CommonModule],
   templateUrl: './led-control.component.html',
 })
-export class LedControlComponent implements OnInit, OnDestroy {
+export class LedControlComponent {
   ledStates = { red: false, green: false };
-  private subscription?: Subscription;
 
-  constructor(private truckControl: TruckControlService) {}
-
-  ngOnInit(): void {
-    this.subscription = this.truckControl.ledStatus$.subscribe(
-      (status) => (this.ledStates = status),
-    );
-  }
-
-  ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
-  }
+  constructor(private ledControl: LedControlService) {}
 
   toggleLed(led: 'red' | 'green'): void {
-    this.truckControl.setLed(led, !this.ledStates[led]);
+    this.ledStates[led] = !this.ledStates[led];
+    this.ledControl.setLed(led, this.ledStates[led]);
   }
 }

@@ -1,8 +1,9 @@
+// src/app/features/fire-truck/components/status/truck-status.component.ts
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { WebSocketService } from '@core/services/websocket/websocket.service';
 import { TruckControlService } from '@features/fire-truck/services/truck-control.service';
 import { Subscription } from 'rxjs';
-import { Direction } from '@features/fire-truck/types/truck.types';
 
 @Component({
   selector: 'app-truck-status',
@@ -12,15 +13,18 @@ import { Direction } from '@features/fire-truck/types/truck.types';
 })
 export class TruckStatusComponent implements OnInit, OnDestroy {
   isConnected = false;
-  currentDirection: Direction = 'stop';
-  batteryLevel = 85; // Simulated value
+  currentDirection = 'stop';
+  batteryLevel = 85; // Simulated for now
   isPumpActive = false;
   private subscription?: Subscription;
 
-  constructor(private truckControl: TruckControlService) {}
+  constructor(
+    private ws: WebSocketService,
+    private truckControl: TruckControlService,
+  ) {}
 
   ngOnInit(): void {
-    this.subscription = this.truckControl.connectionStatus$.subscribe(
+    this.subscription = this.ws.connectionStatus$.subscribe(
       (status: boolean) => (this.isConnected = status),
     );
   }
