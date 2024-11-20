@@ -1,9 +1,9 @@
 // view/pages/dashboard/dashboard.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MovementPadComponent } from '../../../features/fire-truck/components/controls/movement-pad/movement-pad.component';
-import { ConnectionStatusComponent } from '../../../features/fire-truck/components/status/connection-status/connection-status.component';
-import { ThemeToggleComponent } from '../../../shared/components/theme-toggle/theme-toggle.component';
+import { MovementPadComponent } from '@app/features/fire-truck/components/controls/movement-pad/movement-pad.component';
+import { ThemeToggleComponent } from '@app/shared/components/theme-toggle/theme-toggle.component';
+import { TruckStatusComponent } from '@app/features/fire-truck/components/status/truck-status/truck-status.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,8 +11,8 @@ import { ThemeToggleComponent } from '../../../shared/components/theme-toggle/th
   imports: [
     CommonModule,
     MovementPadComponent,
-    ConnectionStatusComponent,
     ThemeToggleComponent,
+    TruckStatusComponent,
   ],
   templateUrl: './dashboard.component.html',
 })

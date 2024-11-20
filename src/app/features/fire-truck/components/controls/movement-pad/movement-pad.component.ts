@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TruckControlService } from '../../../services/truck-control.service';
-import { Direction } from '../../../types/truck.types';
+import { Direction } from '@app/features/fire-truck/types/truck.types';
+import { TruckControlService } from '@app/features/fire-truck/services/truck-control.service';
 
 @Component({
   selector: 'app-movement-pad',
