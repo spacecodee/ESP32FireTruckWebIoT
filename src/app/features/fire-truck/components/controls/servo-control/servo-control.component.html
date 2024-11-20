@@ -1,0 +1,16 @@
+<!-- src/app/features/fire-truck/components/controls/servo-control/servo-control.component.html -->
+<div class="flex flex-col gap-4">
+  <h3 class="text-lg font-medium text-gray-700 dark:text-gray-300">
+    Servo Control
+  </h3>
+  <div class="flex gap-4">
+    <button
+      (click)="sweep(30, 150)"
+      class="px-4 py-2 bg-blue-500 hover:bg-blue-600 active:scale-95 text-white rounded-lg transition-all duration-200 shadow-md"
+      aria-label="Sweep servo"
+    >
+      <i class="fas fa-sync-alt mr-2"></i>
+      Sweep Servo
+    </button>
+  </div>
+</div>

@@ -17,7 +17,14 @@ export interface LedCommand {
   state: boolean;
 }
 
-export type WSCommand = MoveCommand | PumpCommand | LedCommand;
+export interface ServoCommand {
+  command: 'servo';
+  type: 'sweep';
+  startAngle: number;
+  endAngle: number;
+}
+
+export type WSCommand = MoveCommand | PumpCommand | LedCommand | ServoCommand;
 
 export interface ESP32Message {
   connected?: boolean;
@@ -33,4 +40,10 @@ export interface ESP32Status {
   };
 }
 
-export type WSMessage = WSCommand | ESP32Status;
+export interface ServoStatus {
+  type: 'status';
+  servo_angle: number;
+  direction: string;
+}
+
+export type WSMessage = WSCommand | ESP32Status | ServoStatus;

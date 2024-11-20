@@ -5,6 +5,7 @@ import { MovementPadComponent } from '@app/features/fire-truck/components/contro
 import { ThemeToggleComponent } from '@app/shared/components/theme-toggle/theme-toggle.component';
 import { TruckStatusComponent } from '@app/features/fire-truck/components/status/truck-status/truck-status.component';
 import { LedControlComponent } from '@app/features/fire-truck/components/controls/led-control/led-control.component';
+import { ServoControlComponent } from '@features/fire-truck/components/controls/servo-control/servo-control.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,6 +16,7 @@ import { LedControlComponent } from '@app/features/fire-truck/components/control
     ThemeToggleComponent,
     TruckStatusComponent,
     LedControlComponent,
+    ServoControlComponent,
   ],
   templateUrl: './dashboard.component.html',
 })
