@@ -26,6 +26,7 @@ export interface ESP32Message {
 
 export interface ESP32Status {
   type: 'status';
+  connected: boolean;
   leds: {
     red: boolean;
     green: boolean;

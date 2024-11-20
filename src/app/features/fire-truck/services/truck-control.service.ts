@@ -61,16 +61,32 @@ export class TruckControlService {
       url: this.WS_ENDPOINT,
       deserializer: (msg) => JSON.parse(msg.data),
       serializer: (msg) => JSON.stringify(msg),
+      openObserver: {
+        next: () => {
+          console.log('%c🔌 WebSocket Connected', 'color: #10b981');
+          this.connectionStatus.next(true);
+        },
+      },
+      closeObserver: {
+        next: () => {
+          console.log('%c🔌 WebSocket Disconnected', 'color: #ef4444');
+          this.connectionStatus.next(false);
+        },
+      },
     });
 
     this.socket$.subscribe({
       next: (message) => {
         if ('type' in message && message.type === 'status') {
+          this.connectionStatus.next(message.connected);
           this.ledStatus.next(message.leds);
-          console.log('%c📡 LED Status:', 'color: #3b82f6', message.leds);
+          console.log('%c📡 Status Update:', 'color: #3b82f6', message);
         }
       },
-      error: console.error,
+      error: (error) => {
+        console.error('%c❌ WebSocket Error:', 'color: #ef4444', error);
+        this.connectionStatus.next(false);
+      },
     });
   }
 }
