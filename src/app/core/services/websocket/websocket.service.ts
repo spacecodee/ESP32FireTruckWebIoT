@@ -33,12 +33,11 @@ export class WebSocketService {
       serializer: (msg) => JSON.stringify(msg),
       openObserver: {
         next: () => {
-          console.log('%c🔌 WebSocket connection opened', 'color: #10b981');
+          // Removed this log since we'll show status in message handler
         },
       },
       closeObserver: {
         next: () => {
-          console.log('%c🔌 WebSocket connection closed', 'color: #ef4444');
           this.reconnect();
         },
       },
@@ -48,29 +47,29 @@ export class WebSocketService {
       .pipe(
         retry({
           delay: (error, retryCount) => {
-            //console.error('%c❌ Connection Error:', 'color: #ef4444', error);
-            //console.log('%c🔄 Retrying connection...', 'color: #3b82f6');
             return timer(this.RETRY_SECONDS * 1000);
           },
-        }),
-        tap({
-          error: (err) =>
-            console.error('%c❌ Connection Error:', 'color: #ef4444', err),
         }),
       )
       .subscribe({
         next: (message: ConnectionMessage) => {
-          this.logMessage(message);
           if (
             message.type === 'connection' &&
             message.connected !== this.previousConnectionState
           ) {
             this.connectionStatus.next(message.connected);
             this.previousConnectionState = message.connected;
+            // Single connection status message with timestamp
+            const timestamp = new Date().toLocaleTimeString();
+            console.log(
+              `%c[${timestamp}] 📡 ESP32: ${
+                message.connected ? 'Connected' : 'Disconnected'
+              }`,
+              `color: ${message.connected ? '#10b981' : '#ef4444'}`,
+            );
           }
         },
         error: (error) => {
-          console.error('%c❌ Connection Error:', 'color: #ef4444', error);
           this.connectionStatus.next(false);
           this.previousConnectionState = false;
           this.reconnect();
