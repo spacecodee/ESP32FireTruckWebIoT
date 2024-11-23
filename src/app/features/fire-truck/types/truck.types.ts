@@ -54,5 +54,15 @@ export interface ConnectionMessage {
   connected: boolean;
 }
 
+export interface PumpStatus {
+  type: 'status';
+  pump: boolean;
+}
+
 // Update WSMessage type
-export type WSMessage = WSCommand | LedStatus | ConnectionMessage | ServoStatus;
+export type WSMessage =
+  | WSCommand
+  | LedStatus
+  | ConnectionMessage
+  | ServoStatus
+  | PumpStatus;

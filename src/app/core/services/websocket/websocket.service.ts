@@ -14,7 +14,7 @@ import {
 export class WebSocketService {
   private platformId = inject(PLATFORM_ID);
   private socket$?: WebSocketSubject<ConnectionMessage | ServoStatus>;
-  private readonly WS_ENDPOINT = 'ws://192.168.215.3:81';
+  private readonly WS_ENDPOINT = 'ws://192.168.215.4:81';
   private previousConnectionState = false;
   private readonly RETRY_SECONDS = 3;
 

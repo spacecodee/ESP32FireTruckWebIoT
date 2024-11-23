@@ -1,8 +1,9 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Direction } from '@app/features/fire-truck/types/truck.types';
 import { TruckControlService } from '@app/features/fire-truck/services/truck-control.service';
 import { WebSocketService } from '@core/services/websocket/websocket.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-movement-pad',
@@ -10,14 +11,21 @@ import { WebSocketService } from '@core/services/websocket/websocket.service';
   imports: [CommonModule],
   templateUrl: './movement-pad.component.html',
 })
-export class MovementPadComponent implements OnDestroy {
+export class MovementPadComponent implements OnInit, OnDestroy {
   activeDirection: Direction = 'stop';
   isPumpActive = false;
+  private subscription?: Subscription;
 
   constructor(
     private truckControl: TruckControlService,
     private ws: WebSocketService,
   ) {}
+
+  ngOnInit(): void {
+    this.subscription = this.truckControl.pumpState$.subscribe(
+      (state) => (this.isPumpActive = state),
+    );
+  }
 
   onDirectionStart(direction: Direction): void {
     this.activeDirection = direction;
@@ -38,15 +46,11 @@ export class MovementPadComponent implements OnDestroy {
   }
 
   togglePump(): void {
-    this.isPumpActive = !this.isPumpActive;
-    this.truckControl.setPump(this.isPumpActive);
-    console.log(
-      `%c💧 Water Pump: ${this.isPumpActive ? 'ON' : 'OFF'}`,
-      'background: #10b981; color: white; padding: 2px 6px; border-radius: 4px;',
-    );
+    this.truckControl.setPump(!this.isPumpActive);
   }
 
   ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
     this.ws.disconnect();
     console.log(
       '%c📡 Connection closed',
