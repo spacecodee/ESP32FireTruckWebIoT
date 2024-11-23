@@ -46,7 +46,13 @@ export class MovementPadComponent implements OnInit, OnDestroy {
   }
 
   togglePump(): void {
-    this.truckControl.setPump(!this.isPumpActive);
+    const newState = !this.isPumpActive;
+    this.isPumpActive = newState; // Immediately update UI
+    this.truckControl.setPump(newState);
+    console.log(
+      newState ? '%c💦 Pumping' : '%c🚱 Stopped',
+      'background: #10b981; color: white; padding: 2px 6px; border-radius: 4px;',
+    );
   }
 
   ngOnDestroy(): void {

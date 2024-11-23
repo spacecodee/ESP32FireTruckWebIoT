@@ -28,10 +28,16 @@
     <!-- Water Pump -->
     <button
       (click)="togglePump()"
-      [class.bg-emerald-700]="isPumpActive"
-      class="w-16 h-16 rounded-full bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white flex items-center justify-center transition-all duration-200"
+      [class]="
+        isPumpActive
+          ? 'bg-emerald-500 ring-2 ring-emerald-300 shadow-lg shadow-emerald-500/50'
+          : 'bg-emerald-500/20 dark:bg-emerald-500/10 hover:bg-emerald-500/30'
+      "
+      class="w-16 h-16 rounded-full active:scale-95 text-white flex items-center justify-center transition-all duration-300"
+      aria-label="Toggle water pump"
+      [attr.aria-pressed]="isPumpActive"
     >
-      <i class="fas fa-tint"></i>
+      <i class="fas fa-tint" [class.opacity-50]="!isPumpActive"></i>
     </button>
 
     <button
