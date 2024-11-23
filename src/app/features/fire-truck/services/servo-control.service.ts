@@ -8,11 +8,11 @@ import { ServoStatus } from '../types/truck.types';
   providedIn: 'root',
 })
 export class ServoControlService {
-  private servoPosition = new BehaviorSubject<number>(0);
+  private readonly servoPosition = new BehaviorSubject<number>(0);
   servoPosition$ = this.servoPosition.asObservable();
 
-  constructor(private ws: WebSocketService) {
-    this.ws.messages$
+  constructor(private webSocketService: WebSocketService) {
+    this.webSocketService.messages$
       .pipe(
         filter(
           (message): message is ServoStatus =>
@@ -27,6 +27,6 @@ export class ServoControlService {
   }
 
   startSweep(): void {
-    this.ws.sendMessage({ command: 'servo' });
+    this.webSocketService.sendMessage({ command: 'servo' });
   }
 }

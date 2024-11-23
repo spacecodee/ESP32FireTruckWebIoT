@@ -1,7 +1,7 @@
 import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { WebSocketSubject, webSocket } from 'rxjs/webSocket';
 import { BehaviorSubject, timer } from 'rxjs';
-import { retry, tap } from 'rxjs/operators';
+import { retry } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 import {
   ConnectionMessage,
@@ -12,15 +12,15 @@ import {
   providedIn: 'root',
 })
 export class WebSocketService {
-  private platformId = inject(PLATFORM_ID);
+  private readonly platformId = inject(PLATFORM_ID);
   private socket$?: WebSocketSubject<ConnectionMessage | ServoStatus>;
   private readonly WS_ENDPOINT = 'ws://192.168.215.4:81';
   private previousConnectionState = false;
   private readonly RETRY_SECONDS = 3;
 
-  private connectionStatus = new BehaviorSubject<boolean>(false);
+  private readonly connectionStatus = new BehaviorSubject<boolean>(false);
   connectionStatus$ = this.connectionStatus.asObservable();
-  private messages = new BehaviorSubject<any>(null);
+  private readonly messages = new BehaviorSubject<any>(null);
   messages$ = this.messages.asObservable();
 
   constructor() {

@@ -5,8 +5,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './sensor-display.component.html',
-  styleUrl: './sensor-display.component.scss'
+  styleUrl: './sensor-display.component.scss',
 })
-export class SensorDisplayComponent {
-
-}
+export class SensorDisplayComponent {}

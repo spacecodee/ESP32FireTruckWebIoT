@@ -8,14 +8,17 @@ import { LedStatus } from '../types/truck.types';
   providedIn: 'root',
 })
 export class LedControlService {
-  private ledStates = new BehaviorSubject<{ red: boolean; green: boolean }>({
+  private readonly ledStates = new BehaviorSubject<{
+    red: boolean;
+    green: boolean;
+  }>({
     red: false,
     green: false,
   });
   ledStates$ = this.ledStates.asObservable();
 
-  constructor(private ws: WebSocketService) {
-    this.ws.messages$
+  constructor(private readonly webSocketService: WebSocketService) {
+    this.webSocketService.messages$
       .pipe(
         filter(
           (message): message is LedStatus =>
@@ -35,7 +38,7 @@ export class LedControlService {
   }
 
   setLed(led: 'red' | 'green', state: boolean): void {
-    this.ws.sendMessage({
+    this.webSocketService.sendMessage({
       command: 'led',
       led,
       state,

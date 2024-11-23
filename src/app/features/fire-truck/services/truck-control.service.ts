@@ -14,11 +14,11 @@ import { WebSocketService } from '@core/services/websocket/websocket.service';
   providedIn: 'root',
 })
 export class TruckControlService {
-  private pumpState = new BehaviorSubject<boolean>(false);
+  private readonly pumpState = new BehaviorSubject<boolean>(false);
   pumpState$ = this.pumpState.asObservable();
 
-  constructor(private ws: WebSocketService) {
-    this.ws.messages$
+  constructor(private readonly webSocketService: WebSocketService) {
+    this.webSocketService.messages$
       .pipe(
         filter(
           (message): message is PumpStatus =>
@@ -35,11 +35,11 @@ export class TruckControlService {
 
   move(direction: Direction): void {
     const command: MoveCommand = { command: 'move', direction };
-    this.ws.sendMessage(command);
+    this.webSocketService.sendMessage(command);
   }
 
   setPump(state: boolean): void {
     const command: PumpCommand = { command: 'pump', state };
-    this.ws.sendMessage(command);
+    this.webSocketService.sendMessage(command);
   }
 }

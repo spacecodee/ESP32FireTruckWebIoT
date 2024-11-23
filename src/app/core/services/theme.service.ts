@@ -6,8 +6,8 @@ import { isPlatformBrowser } from '@angular/common';
   providedIn: 'root',
 })
 export class ThemeService {
-  private platformId = inject(PLATFORM_ID);
-  private darkMode = new BehaviorSubject<boolean>(false);
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly darkMode = new BehaviorSubject<boolean>(false);
   darkMode$ = this.darkMode.asObservable();
 
   constructor() {

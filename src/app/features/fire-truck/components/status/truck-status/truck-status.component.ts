@@ -19,12 +19,12 @@ export class TruckStatusComponent implements OnInit, OnDestroy {
   private subscription?: Subscription;
 
   constructor(
-    private ws: WebSocketService,
-    private truckControl: TruckControlService,
+    private readonly webSocketService: WebSocketService,
+    private readonly truckControl: TruckControlService,
   ) {}
 
   ngOnInit(): void {
-    this.subscription = this.ws.connectionStatus$.subscribe(
+    this.subscription = this.webSocketService.connectionStatus$.subscribe(
       (status: boolean) => (this.isConnected = status),
     );
   }

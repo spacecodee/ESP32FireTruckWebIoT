@@ -11,7 +11,7 @@ import { ServoControlService } from '@features/fire-truck/services/servo-control
 export class ServoControlComponent {
   servoPosition$ = this.servoControl.servoPosition$;
 
-  constructor(private servoControl: ServoControlService) {}
+  constructor(private readonly servoControl: ServoControlService) {}
 
   startSweep(): void {
     this.servoControl.startSweep();

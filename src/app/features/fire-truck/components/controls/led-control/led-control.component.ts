@@ -14,7 +14,7 @@ export class LedControlComponent implements OnInit, OnDestroy {
   ledStates = { red: false, green: false };
   private subscription?: Subscription;
 
-  constructor(private ledControl: LedControlService) {}
+  constructor(private readonly ledControl: LedControlService) {}
 
   ngOnInit(): void {
     this.subscription = this.ledControl.ledStates$.subscribe(

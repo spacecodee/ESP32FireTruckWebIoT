@@ -23,20 +23,6 @@ export interface ServoCommand {
 
 export type WSCommand = MoveCommand | PumpCommand | LedCommand | ServoCommand;
 
-export interface ESP32Message {
-  connected?: boolean;
-  // Add other message fields as needed
-}
-
-export interface ESP32Status {
-  type: 'status';
-  connected: boolean;
-  leds: {
-    red: boolean;
-    green: boolean;
-  };
-}
-
 // Add new interface for LED status
 export interface LedStatus {
   type: 'status';
