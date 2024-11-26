@@ -20,8 +20,8 @@ export class FlameSensorsComponent implements OnInit, OnDestroy {
   private subscription?: Subscription;
 
   constructor(
-    private flameSensor: FlameSensorService,
-    private audioService: AudioService,
+    private readonly flameSensor: FlameSensorService,
+    private readonly audioService: AudioService,
   ) {}
 
   ngOnInit(): void {

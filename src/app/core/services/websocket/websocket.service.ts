@@ -51,7 +51,7 @@ export class WebSocketService {
     this.socket$
       .pipe(
         retry({
-          delay: (error, retryCount) => {
+          delay: () => {
             return timer(this.RETRY_SECONDS * 1000);
           },
         }),
@@ -76,7 +76,7 @@ export class WebSocketService {
             );
           }
         },
-        error: (error) => {
+        error: () => {
           this.connectionStatus.next(false);
           this.previousConnectionState = false;
           this.reconnect();
@@ -88,16 +88,6 @@ export class WebSocketService {
     timer(this.RETRY_SECONDS * 1000).subscribe(() => {
       console.log('%c🔄 Attempting to reconnect...', 'color: #3b82f6');
       this.initializeWebSocket();
-    });
-  }
-
-  private logMessage(message: ConnectionMessage) {
-    const timestamp = new Date().toLocaleTimeString();
-    const style = message.connected ? 'color: #10b981' : 'color: #ef4444';
-
-    console.log(`%c[${timestamp}] 📡 ESP32:`, style, {
-      type: message.type,
-      connected: message.connected,
     });
   }
 

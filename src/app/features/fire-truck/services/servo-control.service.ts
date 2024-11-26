@@ -11,7 +11,7 @@ export class ServoControlService {
   private readonly servoPosition = new BehaviorSubject<number>(0);
   servoPosition$ = this.servoPosition.asObservable();
 
-  constructor(private webSocketService: WebSocketService) {
+  constructor(private readonly webSocketService: WebSocketService) {
     this.webSocketService.messages$
       .pipe(
         filter(

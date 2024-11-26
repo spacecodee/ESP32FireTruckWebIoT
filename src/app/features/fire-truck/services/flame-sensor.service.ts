@@ -8,7 +8,7 @@ import { FlameSensorStatus } from '../types/truck.types';
   providedIn: 'root',
 })
 export class FlameSensorService {
-  private sensorValues = new BehaviorSubject<{
+  private readonly sensorValues = new BehaviorSubject<{
     sensor1: number;
     sensor2: number;
     sensor3: number;
@@ -19,8 +19,8 @@ export class FlameSensorService {
   });
   sensorValues$ = this.sensorValues.asObservable();
 
-  constructor(private ws: WebSocketService) {
-    this.ws.messages$
+  constructor(private readonly webSocketService: WebSocketService) {
+    this.webSocketService.messages$
       .pipe(
         filter(
           (message): message is FlameSensorStatus =>

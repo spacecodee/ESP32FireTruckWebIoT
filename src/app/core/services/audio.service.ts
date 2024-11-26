@@ -25,7 +25,7 @@ export class AudioService {
 
   playAlert(): void {
     if (this.isEnabled) {
-      this.sounds[this.selectedSound].play();
+      this.sounds[this.selectedSound].play().then((r) => console.log(r));
     }
   }
 

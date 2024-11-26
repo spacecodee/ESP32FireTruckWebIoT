@@ -7,7 +7,7 @@ import { TruckStatusComponent } from '@app/features/fire-truck/components/status
 import { LedControlComponent } from '@app/features/fire-truck/components/controls/led-control/led-control.component';
 import { ServoControlComponent } from '@features/fire-truck/components/controls/servo-control/servo-control.component';
 import { FlameSensorsComponent } from '@features/fire-truck/components/metrics/flame-sensors/flame-sensors.component';
-import { AudioControlComponent } from '../../../features/fire-truck/components/controls/audio-control/audio-control.component';
+import { AudioControlComponent } from '@features/fire-truck/components/controls/audio-control/audio-control.component';
 
 @Component({
   selector: 'app-dashboard',

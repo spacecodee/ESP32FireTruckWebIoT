@@ -13,7 +13,7 @@ export class AudioControlComponent {
   selectedSound: SoundType = 'alert1';
   sounds: SoundType[] = ['alert1', 'alert2', 'alert3'];
 
-  constructor(private audioService: AudioService) {}
+  constructor(private readonly audioService: AudioService) {}
 
   onSoundSelect(sound: SoundType): void {
     this.selectedSound = sound;
