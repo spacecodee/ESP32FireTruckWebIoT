@@ -45,10 +45,18 @@ export interface PumpStatus {
   pump: boolean;
 }
 
+export interface FlameSensorStatus {
+  type: 'flame_sensors';
+  sensor1: number;
+  sensor2: number;
+  sensor3: number;
+}
+
 // Update WSMessage type
 export type WSMessage =
   | WSCommand
   | LedStatus
   | ConnectionMessage
   | ServoStatus
-  | PumpStatus;
+  | PumpStatus
+  | FlameSensorStatus;
