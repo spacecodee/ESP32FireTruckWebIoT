@@ -6,23 +6,38 @@
     (mouseup)="onDirectionEnd()"
     (touchstart)="onDirectionStart('forward')"
     (touchend)="onDirectionEnd()"
-    [class.bg-blue-700]="activeDirection === 'forward'"
-    class="w-16 h-16 rounded-full bg-blue-500 hover:bg-blue-600 active:scale-95 text-white flex items-center justify-center transition-all duration-200"
+    [class]="
+      activeDirection === 'forward'
+        ? 'bg-blue-500 ring-2 ring-blue-300 shadow-lg shadow-blue-500/50'
+        : 'bg-blue-500/20 dark:bg-blue-500/10 hover:bg-blue-500/30'
+    "
+    class="w-16 h-16 rounded-full active:scale-95 text-white flex items-center justify-center transition-all duration-300"
   >
-    <i class="fas fa-arrow-up"></i>
+    <i
+      class="fas fa-arrow-up"
+      [class.opacity-50]="activeDirection !== 'forward'"
+    ></i>
   </button>
 
   <!-- Middle Row -->
   <div class="flex gap-16">
+    <!-- Left -->
     <button
       (mousedown)="onDirectionStart('left')"
       (mouseup)="onDirectionEnd()"
       (touchstart)="onDirectionStart('left')"
       (touchend)="onDirectionEnd()"
-      [class.bg-blue-700]="activeDirection === 'left'"
-      class="w-16 h-16 rounded-full bg-blue-500 hover:bg-blue-600 active:scale-95 text-white flex items-center justify-center transition-all duration-200"
+      [class]="
+        activeDirection === 'left'
+          ? 'bg-blue-500 ring-2 ring-blue-300 shadow-lg shadow-blue-500/50'
+          : 'bg-blue-500/20 dark:bg-blue-500/10 hover:bg-blue-500/30'
+      "
+      class="w-16 h-16 rounded-full active:scale-95 text-white flex items-center justify-center transition-all duration-300"
     >
-      <i class="fas fa-arrow-left"></i>
+      <i
+        class="fas fa-arrow-left"
+        [class.opacity-50]="activeDirection !== 'left'"
+      ></i>
     </button>
 
     <!-- Water Pump -->
@@ -40,15 +55,23 @@
       <i class="fas fa-tint" [class.opacity-50]="!isPumpActive"></i>
     </button>
 
+    <!-- Right -->
     <button
       (mousedown)="onDirectionStart('right')"
       (mouseup)="onDirectionEnd()"
       (touchstart)="onDirectionStart('right')"
       (touchend)="onDirectionEnd()"
-      [class.bg-blue-700]="activeDirection === 'right'"
-      class="w-16 h-16 rounded-full bg-blue-500 hover:bg-blue-600 active:scale-95 text-white flex items-center justify-center transition-all duration-200"
+      [class]="
+        activeDirection === 'right'
+          ? 'bg-blue-500 ring-2 ring-blue-300 shadow-lg shadow-blue-500/50'
+          : 'bg-blue-500/20 dark:bg-blue-500/10 hover:bg-blue-500/30'
+      "
+      class="w-16 h-16 rounded-full active:scale-95 text-white flex items-center justify-center transition-all duration-300"
     >
-      <i class="fas fa-arrow-right"></i>
+      <i
+        class="fas fa-arrow-right"
+        [class.opacity-50]="activeDirection !== 'right'"
+      ></i>
     </button>
   </div>
 
@@ -58,9 +81,16 @@
     (mouseup)="onDirectionEnd()"
     (touchstart)="onDirectionStart('backward')"
     (touchend)="onDirectionEnd()"
-    [class.bg-blue-700]="activeDirection === 'backward'"
-    class="w-16 h-16 rounded-full bg-blue-500 hover:bg-blue-600 active:scale-95 text-white flex items-center justify-center transition-all duration-200"
+    [class]="
+      activeDirection === 'backward'
+        ? 'bg-blue-500 ring-2 ring-blue-300 shadow-lg shadow-blue-500/50'
+        : 'bg-blue-500/20 dark:bg-blue-500/10 hover:bg-blue-500/30'
+    "
+    class="w-16 h-16 rounded-full active:scale-95 text-white flex items-center justify-center transition-all duration-300"
   >
-    <i class="fas fa-arrow-down"></i>
+    <i
+      class="fas fa-arrow-down"
+      [class.opacity-50]="activeDirection !== 'backward'"
+    ></i>
   </button>
 </div>
