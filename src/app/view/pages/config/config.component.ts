@@ -4,11 +4,17 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ConfigService } from '@core/services/config.service';
 import { ThemeToggleComponent } from '@app/shared/components/theme-toggle/theme-toggle.component';
+import { LogoutButtonComponent } from '@app/shared/components/logout-button/logout-button.component';
 
 @Component({
   selector: 'app-config',
   standalone: true,
-  imports: [CommonModule, FormsModule, ThemeToggleComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ThemeToggleComponent,
+    LogoutButtonComponent,
+  ],
   templateUrl: './config.component.html',
 })
 export class ConfigComponent {

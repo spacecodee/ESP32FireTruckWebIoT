@@ -8,6 +8,7 @@ import { LedControlComponent } from '@app/features/fire-truck/components/control
 import { ServoControlComponent } from '@features/fire-truck/components/controls/servo-control/servo-control.component';
 import { FlameSensorsComponent } from '@features/fire-truck/components/metrics/flame-sensors/flame-sensors.component';
 import { AudioControlComponent } from '@features/fire-truck/components/controls/audio-control/audio-control.component';
+import { LogoutButtonComponent } from '@app/shared/components/logout-button/logout-button.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,6 +22,7 @@ import { AudioControlComponent } from '@features/fire-truck/components/controls/
     ServoControlComponent,
     FlameSensorsComponent,
     AudioControlComponent,
+    LogoutButtonComponent,
   ],
   templateUrl: './dashboard.component.html',
 })
