@@ -1,4 +1,4 @@
-// view/pages/dashboard/dashboard.component.ts
+// view/pages/dashboard/main-layout.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThemeToggleComponent } from '@app/shared/components/theme-toggle/theme-toggle.component';
@@ -16,6 +16,6 @@ import { SidebarComponent } from '@shared/components/sidebar/sidebar.component';
     SidebarComponent,
     RouterOutlet,
   ],
-  templateUrl: './dashboard.component.html',
+  templateUrl: './main-layout.component.html',
 })
-export class DashboardComponent {}
+export class MainLayoutComponent {}
