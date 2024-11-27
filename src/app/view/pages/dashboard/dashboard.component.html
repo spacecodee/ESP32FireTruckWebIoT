@@ -14,52 +14,10 @@
   </header>
 
   <!-- Main Content -->
-  <main class="max-w-7xl mx-auto px-4 py-8">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <!-- Control Section -->
-      <section class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-        <h2 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-          Movement Controls
-        </h2>
-        <app-movement-pad></app-movement-pad>
-      </section>
-
-      <!-- Status Section -->
-      <section class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-        <h2 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-          Status
-        </h2>
-        <app-truck-status></app-truck-status>
-      </section>
-
-      <!-- LED Controls Section -->
-      <section class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-        <h2 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-          LED Controls
-        </h2>
-        <app-led-control></app-led-control>
-      </section>
-
-      <!-- Servo Controls Section -->
-      <section class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-        <h2 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-          Servo Controls
-        </h2>
-        <app-servo-control></app-servo-control>
-      </section>
-
-      <!-- Flame Sensors Section -->
-      <section class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-        <h2 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-          Flame Sensors
-        </h2>
-        <app-flame-sensors></app-flame-sensors>
-      </section>
-
-      <!-- Audio Controls Section -->
-      <section class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-        <app-audio-control></app-audio-control>
-      </section>
-    </div>
-  </main>
+  <div class="flex h-[calc(100vh-4rem)]">
+    <app-sidebar></app-sidebar>
+    <main class="flex-1 p-8 overflow-auto">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
 </div>

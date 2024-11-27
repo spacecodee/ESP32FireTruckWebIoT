@@ -1,0 +1,21 @@
+<!-- src/app/shared/components/sidebar/sidebar.component.html -->
+<div class="h-full w-64 bg-white dark:bg-gray-800 shadow-lg">
+  <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+    <h2 class="text-xl font-bold text-gray-800 dark:text-white">Fire Truck</h2>
+  </div>
+
+  <nav class="mt-4">
+    <ul class="space-y-2">
+      <li *ngFor="let item of menuItems">
+        <a
+          [routerLink]="item.route"
+          routerLinkActive="bg-blue-50 dark:bg-gray-700 text-blue-600 dark:text-blue-400"
+          class="flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+        >
+          <i class="fas {{ item.icon }} w-5"></i>
+          <span>{{ item.label }}</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
