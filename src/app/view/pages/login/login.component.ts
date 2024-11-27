@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@core/services/auth.service';
@@ -8,7 +8,7 @@ import { ThemeToggleComponent } from '@shared/components/theme-toggle/theme-togg
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, ThemeToggleComponent],
+  imports: [CommonModule, FormsModule, ThemeToggleComponent, NgOptimizedImage],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
