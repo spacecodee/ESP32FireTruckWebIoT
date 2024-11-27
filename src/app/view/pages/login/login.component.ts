@@ -24,7 +24,7 @@ export class LoginComponent {
 
   onSubmit(): void {
     if (this.auth.login(this.username, this.password)) {
-      this.router.navigate(['/dashboard']).then((r) => console.log(r));
+      this.router.navigate(['/config']).then((r) => console.log(r));
     } else {
       this.error = 'Invalid credentials';
     }

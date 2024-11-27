@@ -7,6 +7,7 @@ import {
   ConnectionMessage,
   ServoStatus,
 } from '@features/fire-truck/types/truck.types';
+import { ConfigService } from '../config.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,6 @@ import {
 export class WebSocketService {
   private readonly platformId = inject(PLATFORM_ID);
   private socket$?: WebSocketSubject<ConnectionMessage | ServoStatus>;
-  private readonly WS_ENDPOINT = 'ws://192.168.215.4:81';
   private previousConnectionState = false;
   private readonly RETRY_SECONDS = 3;
 
@@ -23,17 +23,18 @@ export class WebSocketService {
   private readonly messages = new BehaviorSubject<any>(null);
   messages$ = this.messages.asObservable();
 
-  constructor() {
+  constructor(private readonly config: ConfigService) {
     if (isPlatformBrowser(this.platformId)) {
       this.initializeWebSocket();
     }
   }
 
   private initializeWebSocket(): void {
+    const wsUrl = this.config.getWebSocketUrl();
     console.log('%c🔌 Attempting to connect...', 'color: #3b82f6');
 
     this.socket$ = webSocket<ConnectionMessage | ServoStatus>({
-      url: this.WS_ENDPOINT,
+      url: wsUrl,
       deserializer: (msg) => JSON.parse(msg.data),
       serializer: (msg) => JSON.stringify(msg),
       openObserver: {
