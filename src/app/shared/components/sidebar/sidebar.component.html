@@ -1,11 +1,13 @@
 <!-- src/app/shared/components/sidebar/sidebar.component.html -->
 <div class="h-full w-64 bg-white dark:bg-gray-800 shadow-lg">
-  <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+  <div
+    class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between"
+  >
     <h2 class="text-xl font-bold text-gray-800 dark:text-white">Fire Truck</h2>
   </div>
 
   <nav class="mt-4">
-    <ul class="space-y-2">
+    <ul class="space-y-1">
       <li *ngFor="let item of menuItems">
         <a
           [routerLink]="item.route"
