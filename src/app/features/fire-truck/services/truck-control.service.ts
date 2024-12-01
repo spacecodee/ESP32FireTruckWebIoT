@@ -34,7 +34,7 @@ export class TruckControlService {
   }
 
   move(direction: Direction): void {
-    const command: MoveCommand = { command: 'move', direction };
+    const command: MoveCommand = { command: 'motor', direction };
     this.webSocketService.sendMessage(command);
   }
 

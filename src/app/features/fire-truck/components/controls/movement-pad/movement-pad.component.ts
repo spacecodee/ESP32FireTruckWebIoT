@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Direction } from '@app/features/fire-truck/types/truck.types';
 import { TruckControlService } from '@app/features/fire-truck/services/truck-control.service';
@@ -25,6 +25,36 @@ export class MovementPadComponent implements OnInit, OnDestroy {
     this.subscription = this.truckControl.pumpState$.subscribe(
       (state) => (this.isPumpActive = state),
     );
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  handleKeyDown(event: KeyboardEvent): void {
+    switch (event.key) {
+      case 'ArrowUp':
+        this.onDirectionStart('forward');
+        break;
+      case 'ArrowDown':
+        this.onDirectionStart('backward');
+        break;
+      case 'ArrowLeft':
+        this.onDirectionStart('left');
+        break;
+      case 'ArrowRight':
+        this.onDirectionStart('right');
+        break;
+      case ' ':
+        this.onDirectionEnd();
+        break;
+    }
+  }
+
+  @HostListener('window:keyup', ['$event'])
+  handleKeyUp(event: KeyboardEvent): void {
+    if (
+      ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)
+    ) {
+      this.onDirectionEnd();
+    }
   }
 
   onDirectionStart(direction: Direction): void {

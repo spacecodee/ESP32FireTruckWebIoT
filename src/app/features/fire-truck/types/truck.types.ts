@@ -2,7 +2,7 @@
 export type Direction = 'forward' | 'backward' | 'left' | 'right' | 'stop';
 
 export interface MoveCommand {
-  command: 'move';
+  command: 'motor';
   direction: Direction;
 }
 
