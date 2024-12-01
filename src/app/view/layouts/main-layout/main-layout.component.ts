@@ -6,6 +6,7 @@ import { LogoutButtonComponent } from '@app/shared/components/logout-button/logo
 import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from '@shared/components/sidebar/sidebar.component';
 import { WebSocketService } from '@core/services/websocket/websocket.service';
+import { ConnectionStatusComponent } from '@shared/components/connection-status/connection-status.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,6 +17,7 @@ import { WebSocketService } from '@core/services/websocket/websocket.service';
     LogoutButtonComponent,
     SidebarComponent,
     RouterOutlet,
+    ConnectionStatusComponent,
   ],
   templateUrl: './main-layout.component.html',
 })

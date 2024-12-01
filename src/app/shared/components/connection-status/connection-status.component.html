@@ -1,0 +1,25 @@
+<!-- src/app/shared/components/connection-status/connection-status.component.html -->
+<div
+  class="flex items-center gap-2 px-3 py-1 rounded-full text-sm"
+  [class]="
+    (webSocketService.connectionStatus$ | async)
+      ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+      : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+  "
+>
+  <div
+    class="w-2 h-2 rounded-full"
+    [class]="
+      (webSocketService.connectionStatus$ | async)
+        ? 'bg-green-500'
+        : 'bg-red-500'
+    "
+  ></div>
+  <span>
+    {{
+      (webSocketService.connectionStatus$ | async)
+        ? 'Connected'
+        : 'Disconnected'
+    }}
+  </span>
+</div>
