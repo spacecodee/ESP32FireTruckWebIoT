@@ -5,6 +5,7 @@ import { ThemeToggleComponent } from '@app/shared/components/theme-toggle/theme-
 import { LogoutButtonComponent } from '@app/shared/components/logout-button/logout-button.component';
 import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from '@shared/components/sidebar/sidebar.component';
+import { WebSocketService } from '@core/services/websocket/websocket.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,4 +19,6 @@ import { SidebarComponent } from '@shared/components/sidebar/sidebar.component';
   ],
   templateUrl: './main-layout.component.html',
 })
-export class MainLayoutComponent {}
+export class MainLayoutComponent {
+  constructor(public webSocketService: WebSocketService) {}
+}
