@@ -30,7 +30,6 @@ export class FlameSensorService {
         ),
       )
       .subscribe((status) => {
-        console.log('%c🔥 Flame Sensors Update:', 'color: #f59e0b', status);
         this.sensorValues.next({
           sensor1: status.sensor1,
           sensor2: status.sensor2,
