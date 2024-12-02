@@ -27,7 +27,8 @@ export class FlameSensorsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.flameSensor.sensorValues$.subscribe((values) => {
       this.sensorValues = values;
-      if (Object.values(values).some((value) => value < 50)) {
+      // Alert if any sensor detects close fire (value < 30)
+      if (Object.values(values).some((value) => value <= 30)) {
         this.audioService.playAlert();
       }
     });
@@ -38,8 +39,9 @@ export class FlameSensorsComponent implements OnInit, OnDestroy {
   }
 
   getColorClass(value: number): string {
-    if (value > 80) return 'text-red-500';
-    if (value > 50) return 'text-orange-500';
-    return 'text-green-500';
+    if (value <= 30) return 'text-red-500 stroke-red-500';
+    if (value <= 60) return 'text-orange-500 stroke-orange-500';
+    if (value <= 80) return 'text-yellow-500 stroke-yellow-500';
+    return 'text-green-500 stroke-green-500';
   }
 }
