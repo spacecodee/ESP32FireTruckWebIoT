@@ -1,5 +1,14 @@
 // src/app/features/fire-truck/types/truck.types.ts
-export type Direction = 'forward' | 'backward' | 'left' | 'right' | 'stop';
+export type Direction =
+  | 'forward'
+  | 'backward'
+  | 'left'
+  | 'right'
+  | 'stop'
+  | 'forward_left'
+  | 'forward_right'
+  | 'backward_left'
+  | 'backward_right';
 
 export interface MoveCommand {
   command: 'motor';

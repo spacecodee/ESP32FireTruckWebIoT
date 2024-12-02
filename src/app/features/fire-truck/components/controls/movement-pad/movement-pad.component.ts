@@ -29,30 +29,26 @@ export class MovementPadComponent implements OnInit, OnDestroy {
 
   @HostListener('window:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent): void {
-    switch (event.key) {
-      case 'ArrowUp':
-        this.onDirectionStart('forward');
-        break;
-      case 'ArrowDown':
-        this.onDirectionStart('backward');
-        break;
-      case 'ArrowLeft':
-        this.onDirectionStart('left');
-        break;
-      case 'ArrowRight':
-        this.onDirectionStart('right');
-        break;
-      case ' ':
-        this.onDirectionEnd();
-        break;
+    const keyMap: Record<string, Direction> = {
+      ArrowUp: 'forward',
+      ArrowDown: 'backward',
+      ' ': 'stop',
+      q: 'forward_left',
+      e: 'forward_right',
+      z: 'backward_left',
+      c: 'backward_right',
+    };
+
+    if (keyMap[event.key]) {
+      event.preventDefault();
+      this.onDirectionStart(keyMap[event.key]);
     }
   }
 
   @HostListener('window:keyup', ['$event'])
   handleKeyUp(event: KeyboardEvent): void {
-    if (
-      ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)
-    ) {
+    const validKeys = ['ArrowUp', 'ArrowDown', 'q', 'e', 'z', 'c'];
+    if (validKeys.includes(event.key)) {
       this.onDirectionEnd();
     }
   }
