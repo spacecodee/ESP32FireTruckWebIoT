@@ -25,8 +25,21 @@ export class AudioService {
 
   playAlert(): void {
     if (this.isEnabled) {
-      this.sounds[this.selectedSound].play().then((r) => console.log(r));
+      this.sounds[this.selectedSound].play().then((r) => console.log("playAlert", r));
     }
+  }
+
+  playPreview(type: SoundType): void {
+    this.sounds[type].play().then((r) => console.log("playPreview", r));
+  }
+
+  pausePreview(type: SoundType): void {
+    this.sounds[type].pause();
+  }
+
+  resetPreview(type: SoundType): void {
+    this.sounds[type].pause();
+    this.sounds[type].currentTime = 0;
   }
 
   constructor() {}

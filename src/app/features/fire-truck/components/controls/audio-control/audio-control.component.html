@@ -13,18 +13,40 @@
     </button>
   </div>
 
-  <div class="flex gap-2">
-    <button
-      *ngFor="let sound of sounds"
-      (click)="onSoundSelect(sound)"
-      [class]="
-        selectedSound === sound
-          ? 'bg-blue-500 text-white'
-          : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
-      "
-      class="px-4 py-2 rounded-lg transition-colors"
-    >
-      {{ sound }}
-    </button>
+  <div class="flex flex-col gap-4">
+    <!-- Sound Selection -->
+    <div class="flex gap-2">
+      <button
+        *ngFor="let sound of sounds"
+        (click)="onSoundSelect(sound)"
+        [class]="
+          selectedSound === sound
+            ? 'bg-blue-500 text-white'
+            : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
+        "
+        class="px-4 py-2 rounded-lg transition-colors flex-1"
+      >
+        {{ sound }}
+      </button>
+    </div>
+
+    <!-- Preview Controls -->
+    <div class="flex justify-center gap-4">
+      <button
+        (click)="togglePreview()"
+        class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-blue-500"
+        [attr.aria-label]="isPlaying ? 'Pause preview' : 'Play preview'"
+      >
+        <i [class]="isPlaying ? 'fas fa-pause' : 'fas fa-play'"></i>
+      </button>
+
+      <button
+        (click)="resetPreview()"
+        class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-blue-500"
+        aria-label="Reset preview"
+      >
+        <i class="fas fa-stop"></i>
+      </button>
+    </div>
   </div>
 </div>
