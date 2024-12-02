@@ -1,27 +1,108 @@
-# Esp32AngularWebIoT
+Fire Truck Control System
+=========================
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.3.
+A web-based control system for fire trucks built with Angular, providing real-time monitoring and control capabilities through WebSocket communication with an ESP32 device.
 
-## Development server
+Features
+--------
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### 🚒 Real-time Control
 
-## Code scaffolding
+- Live monitoring of truck status
+- Remote control of truck components
+- Real-time WebSocket connection status indicator
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### 🎮 Control Panel
 
-## Build
+- Interactive dashboard for truck monitoring
+- Real-time data visualization
+- Multiple alert sound options (3 different alert sounds)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### 🌓 User Experience
 
-## Running unit tests
+- Dark/Light theme support
+- Responsive design for mobile and desktop
+- Secure authentication system
+- Interactive sidebar navigation
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### 🔧 Technical Features
 
-## Running end-to-end tests
+- WebSocket communication with ESP32
+- Real-time data updates
+- Secure user authentication
+- Responsive layout for all devices
+- Audio feedback system
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Prerequisites
+-------------
 
-## Further help
+- Node.js (v14 or higher)
+- Angular CLI
+- ESP32 device with appropriate firmware
+- Modern web browser
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Installation
+------------
+
+1. Clone the repository:
+
+`git clone https://github.com/spacecodee/ESP32FireTruckWebIoT.git`
+
+1. Install dependencies:
+
+`npm install`
+
+1. Start the development server:
+
+`ng serve`
+
+1. Access the application at `http://localhost:4200`
+
+Network Configuration
+---------------------
+
+To access the application from other devices in your local network:
+
+`ng serve --host 0.0.0.0`
+
+Then access using:`http://YOUR_LOCAL_IP:4200`
+
+Project Structure
+-----------------
+
+src/
+
+├── app/
+
+│ ├── core/ # Core services and guards
+
+│ ├── features/ # Feature modules
+
+│ ├── shared/ # Shared components
+
+│ └── view/ # Layout components
+
+├── assets/
+
+│ └── audio/ # Alert sound files
+
+Contributing
+------------
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+License
+-------
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+
+Acknowledgements
+----------------
+
+-   Angular team for the fantastic framework
+-   TailwindCSS for the styling utilities
+-   ESP32 community for the hardware support
