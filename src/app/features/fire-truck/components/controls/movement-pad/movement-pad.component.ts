@@ -25,6 +25,15 @@ export class MovementPadComponent implements OnInit, OnDestroy {
     this.subscription = this.truckControl.pumpState$.subscribe(
       (state) => (this.isPumpActive = state),
     );
+
+    this.subscription.add(
+      this.webSocketService.connectionStatus$.subscribe((connected) => {
+        if (!connected) {
+          this.onDirectionEnd(); // Stop movement if connection lost
+          this.isPumpActive = false; // Reset pump state
+        }
+      }),
+    );
   }
 
   @HostListener('window:keydown', ['$event'])

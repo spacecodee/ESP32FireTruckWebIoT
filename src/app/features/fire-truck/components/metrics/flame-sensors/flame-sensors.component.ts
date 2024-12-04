@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FlameSensorService } from '@features/fire-truck/services/flame-sensor.service';
 import { Subscription } from 'rxjs';
 import { AudioService } from '@app/core/services/audio.service';
+import { WebSocketService } from '@app/core/services/websocket/websocket.service';
 
 @Component({
   selector: 'app-flame-sensors',
@@ -17,31 +18,51 @@ export class FlameSensorsComponent implements OnInit, OnDestroy {
     sensor2: 100,
     sensor3: 100,
   };
-  private subscription?: Subscription;
+  private readonly subscriptions = new Subscription();
   private previousAlert = false;
 
   constructor(
     private readonly flameSensor: FlameSensorService,
     private readonly audioService: AudioService,
+    private readonly webSocketService: WebSocketService,
   ) {}
 
   ngOnInit(): void {
-    this.subscription = this.flameSensor.sensorValues$.subscribe((values) => {
-      this.sensorValues = values;
+    // Subscribe to sensor values
+    this.subscriptions.add(
+      this.flameSensor.sensorValues$.subscribe((values) => {
+        this.sensorValues = values;
 
-      // Only alert if any sensor is detecting fire and we haven't alerted yet
-      const isFireDetected = Object.values(values).some((value) => value <= 30);
-      if (isFireDetected && !this.previousAlert) {
-        this.audioService.playAlert();
-        this.previousAlert = true;
-      } else if (!isFireDetected) {
-        this.previousAlert = false;
-      }
-    });
+        const isFireDetected = Object.values(values).some(
+          (value) => value <= 30,
+        );
+        if (isFireDetected && !this.previousAlert) {
+          this.audioService.playAlert();
+          this.previousAlert = true;
+        } else if (!isFireDetected) {
+          this.previousAlert = false;
+        }
+      }),
+    );
+
+    // Add connection status subscription
+    this.subscriptions.add(
+      this.webSocketService.connectionStatus$.subscribe((connected) => {
+        if (!connected) {
+          // Reset sensor values when disconnected
+          this.sensorValues = {
+            sensor1: 100,
+            sensor2: 100,
+            sensor3: 100,
+          };
+          this.previousAlert = false;
+        }
+      }),
+    );
   }
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 
   getColorClass(value: number): string {

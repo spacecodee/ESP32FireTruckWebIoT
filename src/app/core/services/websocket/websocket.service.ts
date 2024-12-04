@@ -17,6 +17,7 @@ export class WebSocketService {
   private socket$?: WebSocketSubject<any>;
   private previousConnectionState = false;
   private readonly RETRY_SECONDS = 3;
+  private isInitialized = false;
 
   private readonly connectionStatus = new BehaviorSubject<boolean>(false);
   connectionStatus$ = this.connectionStatus.asObservable();
@@ -30,6 +31,12 @@ export class WebSocketService {
   }
 
   private initializeWebSocket(): void {
+    // Prevent multiple initializations
+    if (this.isInitialized) {
+      return;
+    }
+
+    this.isInitialized = true;
     const wsUrl = this.config.getWebSocketUrl();
     console.log('%c🔌 Attempting to connect...', 'color: #3b82f6');
 
@@ -45,9 +52,7 @@ export class WebSocketService {
       },
       closeObserver: {
         next: () => {
-          console.log('%c📡 Connection Lost', 'color: #ef4444');
-          this.connectionStatus.next(false);
-          this.reconnect();
+          this.handleDisconnect();
         },
       },
     });
@@ -80,10 +85,9 @@ export class WebSocketService {
             );
           }
         },
-        error: () => {
-          this.connectionStatus.next(false);
-          this.previousConnectionState = false;
-          this.reconnect();
+        error: (error) => {
+          console.error('%c❌ WebSocket Error:', 'color: #ef4444', error);
+          this.handleDisconnect();
         },
         complete: () => {
           this.connectionStatus.next(false);
@@ -91,15 +95,26 @@ export class WebSocketService {
       });
   }
 
+  private handleDisconnect(): void {
+    this.connectionStatus.next(false);
+    this.isInitialized = false;
+    console.log('%c🔌 Disconnected', 'color: #ef4444');
+  }
+
   private reconnect(): void {
-    timer(this.RETRY_SECONDS * 1000).subscribe(() => {
-      console.log('%c🔄 Attempting to reconnect...', 'color: #3b82f6');
-      this.initializeWebSocket();
-    });
+    if (!this.isInitialized) {
+      timer(this.RETRY_SECONDS * 1000).subscribe(() => {
+        console.log('%c🔄 Attempting to reconnect...', 'color: #3b82f6');
+        this.initializeWebSocket();
+      });
+    }
   }
 
   sendMessage(message: any): void {
     if (!isPlatformBrowser(this.platformId)) return;
+    if (!this.isInitialized) {
+      this.initializeWebSocket();
+    }
     this.socket$?.next(message);
   }
 

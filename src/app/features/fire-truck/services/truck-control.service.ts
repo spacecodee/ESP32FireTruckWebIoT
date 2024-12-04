@@ -16,6 +16,8 @@ import { WebSocketService } from '@core/services/websocket/websocket.service';
 export class TruckControlService {
   private readonly pumpState = new BehaviorSubject<boolean>(false);
   pumpState$ = this.pumpState.asObservable();
+  private readonly direction$ = new BehaviorSubject<Direction>('stop');
+  directionState$ = this.direction$.asObservable();
 
   constructor(private readonly webSocketService: WebSocketService) {
     this.webSocketService.messages$
@@ -31,6 +33,15 @@ export class TruckControlService {
       .subscribe((status) => {
         this.pumpState.next(status.pump);
       });
+
+    // Listen for connection status
+    this.webSocketService.connectionStatus$.subscribe((connected) => {
+      if (!connected) {
+        // Reset states when disconnected
+        this.direction$.next('stop');
+        this.pumpState.next(false);
+      }
+    });
   }
 
   move(direction: Direction): void {
