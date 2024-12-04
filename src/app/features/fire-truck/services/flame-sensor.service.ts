@@ -13,9 +13,9 @@ export class FlameSensorService {
     sensor2: number;
     sensor3: number;
   }>({
-    sensor1: 0,
-    sensor2: 0,
-    sensor3: 0,
+    sensor1: 100, // Changed from 0 to 100 (no fire detected)
+    sensor2: 100,
+    sensor3: 100,
   });
   sensorValues$ = this.sensorValues.asObservable();
 

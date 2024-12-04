@@ -13,11 +13,12 @@ import { AudioService } from '@app/core/services/audio.service';
 })
 export class FlameSensorsComponent implements OnInit, OnDestroy {
   sensorValues = {
-    sensor1: 0,
-    sensor2: 0,
-    sensor3: 0,
+    sensor1: 100,
+    sensor2: 100,
+    sensor3: 100,
   };
   private subscription?: Subscription;
+  private previousAlert = false;
 
   constructor(
     private readonly flameSensor: FlameSensorService,
@@ -27,9 +28,14 @@ export class FlameSensorsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.flameSensor.sensorValues$.subscribe((values) => {
       this.sensorValues = values;
-      // Alert if any sensor detects close fire (value < 30)
-      if (Object.values(values).some((value) => value <= 30)) {
+
+      // Only alert if any sensor is detecting fire and we haven't alerted yet
+      const isFireDetected = Object.values(values).some((value) => value <= 30);
+      if (isFireDetected && !this.previousAlert) {
         this.audioService.playAlert();
+        this.previousAlert = true;
+      } else if (!isFireDetected) {
+        this.previousAlert = false;
       }
     });
   }
