@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AudioService, SoundType } from '@core/services/audio.service';
 import { Subscription } from 'rxjs';
+import { AudioService, SoundType } from '@core/services/audio.service';
 import { WebSocketService } from '@app/core/services/websocket/websocket.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class AudioControlComponent implements OnInit, OnDestroy {
   selectedSound: SoundType = 'alert1';
   sounds: SoundType[] = ['alert1', 'alert2', 'alert3'];
   isPlaying = false;
-  private subscription?: Subscription;
+  private readonly subscription = new Subscription();
 
   constructor(
     private readonly audioService: AudioService,
@@ -23,21 +23,25 @@ export class AudioControlComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.subscription = this.webSocketService.connectionStatus$.subscribe(
-      (connected) => {
+    this.subscription.add(
+      this.webSocketService.connectionStatus$.subscribe((connected) => {
         if (!connected) {
-          // Reset audio state when disconnected
-          this.isPlaying = false;
-          this.audioService.resetPreview(this.selectedSound);
+          // Only reset audio state on actual disconnection
+          if (this.isPlaying) {
+            this.isPlaying = false;
+            this.audioService.resetPreview(this.selectedSound);
+          }
         }
-      },
+      }),
     );
   }
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
-    // Ensure audio is stopped when component is destroyed
-    this.audioService.resetPreview(this.selectedSound);
+    // Clean up subscriptions without disconnecting WebSocket
+    this.subscription.unsubscribe();
+    if (this.isPlaying) {
+      this.audioService.resetPreview(this.selectedSound);
+    }
   }
 
   onSoundSelect(sound: SoundType): void {

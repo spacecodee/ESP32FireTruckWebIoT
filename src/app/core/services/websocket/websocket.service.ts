@@ -120,7 +120,13 @@ export class WebSocketService {
 
   disconnect(): void {
     if (!isPlatformBrowser(this.platformId)) return;
+    this.connectionStatus.next(false);
+  }
+
+  cleanUp(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
     this.socket$?.complete();
     this.connectionStatus.next(false);
+    this.isInitialized = false;
   }
 }

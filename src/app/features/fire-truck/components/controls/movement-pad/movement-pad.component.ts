@@ -92,10 +92,5 @@ export class MovementPadComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
-    this.webSocketService.disconnect();
-    console.log(
-      '%c📡 Connection closed',
-      'background: #6b7280; color: white; padding: 2px 6px; border-radius: 4px;',
-    );
   }
 }
