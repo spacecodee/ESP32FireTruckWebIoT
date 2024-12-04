@@ -18,8 +18,8 @@ export class FlameSensorsComponent implements OnInit, OnDestroy {
     sensor2: 100,
     sensor3: 100,
   };
-  private readonly subscriptions = new Subscription();
   private previousAlert = false;
+  private readonly subscription = new Subscription();
 
   constructor(
     private readonly flameSensor: FlameSensorService,
@@ -28,8 +28,20 @@ export class FlameSensorsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // Subscribe to sensor values
-    this.subscriptions.add(
+    this.subscription.add(
+      this.webSocketService.connectionStatus$.subscribe((connected) => {
+        if (!connected) {
+          this.sensorValues = {
+            sensor1: 100,
+            sensor2: 100,
+            sensor3: 100,
+          };
+          this.previousAlert = false;
+        }
+      }),
+    );
+
+    this.subscription.add(
       this.flameSensor.sensorValues$.subscribe((values) => {
         this.sensorValues = values;
 
@@ -44,25 +56,10 @@ export class FlameSensorsComponent implements OnInit, OnDestroy {
         }
       }),
     );
-
-    // Add connection status subscription
-    this.subscriptions.add(
-      this.webSocketService.connectionStatus$.subscribe((connected) => {
-        if (!connected) {
-          // Reset sensor values when disconnected
-          this.sensorValues = {
-            sensor1: 100,
-            sensor2: 100,
-            sensor3: 100,
-          };
-          this.previousAlert = false;
-        }
-      }),
-    );
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
   getColorClass(value: number): string {
