@@ -14,7 +14,7 @@ import { ConfigService } from '../config.service';
 })
 export class WebSocketService {
   private readonly platformId = inject(PLATFORM_ID);
-  private socket$?: WebSocketSubject<ConnectionMessage | ServoStatus>;
+  private socket$?: WebSocketSubject<any>;
   private previousConnectionState = false;
   private readonly RETRY_SECONDS = 3;
 
@@ -33,17 +33,20 @@ export class WebSocketService {
     const wsUrl = this.config.getWebSocketUrl();
     console.log('%c🔌 Attempting to connect...', 'color: #3b82f6');
 
-    this.socket$ = webSocket<ConnectionMessage | ServoStatus>({
+    this.socket$ = webSocket({
       url: wsUrl,
       deserializer: (msg) => JSON.parse(msg.data),
       serializer: (msg) => JSON.stringify(msg),
       openObserver: {
         next: () => {
-          // Removed this log since we'll show status in message handler
+          console.log('%c🔌 Connected', 'color: #10b981');
+          this.connectionStatus.next(true);
         },
       },
       closeObserver: {
         next: () => {
+          console.log('%c📡 Connection Lost', 'color: #ef4444');
+          this.connectionStatus.next(false);
           this.reconnect();
         },
       },
@@ -82,6 +85,9 @@ export class WebSocketService {
           this.previousConnectionState = false;
           this.reconnect();
         },
+        complete: () => {
+          this.connectionStatus.next(false);
+        },
       });
   }
 
@@ -100,5 +106,6 @@ export class WebSocketService {
   disconnect(): void {
     if (!isPlatformBrowser(this.platformId)) return;
     this.socket$?.complete();
+    this.connectionStatus.next(false);
   }
 }
