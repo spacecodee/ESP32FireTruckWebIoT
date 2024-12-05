@@ -17,12 +17,14 @@ Features
 - Interactive dashboard for truck monitoring
 - Real-time data visualization
 - Multiple alert sound options (3 different alert sounds)
+- WiFi reset functionality with confirmation
+- Fire detection analytics (daily, weekly, monthly)
 
 ### 🌓 User Experience
 
 - Dark/Light theme support
 - Responsive design for mobile and desktop
-- Secure authentication system
+- Secure authentication system with persistent login
 - Interactive sidebar navigation
 
 ### 🔧 Technical Features
@@ -48,15 +50,15 @@ Installation
 
 `git clone https://github.com/spacecodee/ESP32FireTruckWebIoT.git`
 
-1. Install dependencies:
+2. Install dependencies:
 
 `npm install`
 
-1. Start the development server:
+3. Start the development server:
 
 `ng serve`
 
-1. Access the application at `http://localhost:4200`
+4. Access the application at `http://localhost:4200`
 
 Network Configuration
 ---------------------
@@ -65,7 +67,7 @@ To access the application from other devices in your local network:
 
 `ng serve --host 0.0.0.0`
 
-Then access using:`http://YOUR_LOCAL_IP:4200`
+Then access using: `http://YOUR_LOCAL_IP:4200`
 
 Project Structure
 -----------------
