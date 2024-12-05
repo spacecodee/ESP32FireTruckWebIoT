@@ -4,6 +4,7 @@ import { FlameSensorService } from '@features/fire-truck/services/flame-sensor.s
 import { Subscription } from 'rxjs';
 import { AudioService } from '@app/core/services/audio.service';
 import { WebSocketService } from '@app/core/services/websocket/websocket.service';
+import { FireAnalyticsService } from '@features/fire-truck/services/fire-analytics.service';
 
 @Component({
   selector: 'app-flame-sensors',
@@ -25,6 +26,7 @@ export class FlameSensorsComponent implements OnInit, OnDestroy {
     private readonly flameSensor: FlameSensorService,
     private readonly audioService: AudioService,
     private readonly webSocketService: WebSocketService,
+    private readonly fireAnalytics: FireAnalyticsService, // Add this
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +48,13 @@ export class FlameSensorsComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.flameSensor.sensorValues$.subscribe((values) => {
         this.sensorValues = values;
+
+        Object.entries(values).forEach(([key, value]) => {
+          if (value <= 30 && !this.previousAlert) {
+            const sensorNumber = parseInt(key.replace('sensor', ''));
+            this.fireAnalytics.recordFireDetection(sensorNumber, value);
+          }
+        });
 
         const isFireDetected = Object.values(values).some(
           (value) => value <= 30,

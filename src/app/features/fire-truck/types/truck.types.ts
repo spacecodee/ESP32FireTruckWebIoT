@@ -61,6 +61,18 @@ export interface FlameSensorStatus {
   sensor3: number;
 }
 
+export interface FireAnalytics {
+  day: number;
+  week: number;
+  month: number;
+  history: {
+    date: string;
+    sensor: number;
+    value: number;
+  }[];
+  lastDetection: Date | null;
+}
+
 // Update WSMessage type
 export type WSMessage =
   | WSCommand

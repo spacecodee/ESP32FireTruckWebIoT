@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlameSensorsComponent } from '@features/fire-truck/components/metrics/flame-sensors/flame-sensors.component';
+import { FireAnalyticsComponent } from '@features/fire-truck/components/analytics/fire-analytics/fire-analytics.component';
 
 @Component({
   selector: 'app-sensor-panel',
   standalone: true,
-  imports: [CommonModule, FlameSensorsComponent],
+  imports: [CommonModule, FlameSensorsComponent, FireAnalyticsComponent],
   templateUrl: './sensor-panel.component.html',
 })
 export class SensorPanelComponent {

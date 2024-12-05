@@ -1,0 +1,77 @@
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+  <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-6">
+    Fire Detection Analytics
+  </h3>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Daily Stats -->
+    <div class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+      <div class="text-sm text-blue-600 dark:text-blue-400">Today</div>
+      <div class="text-2xl font-bold text-blue-700 dark:text-blue-300">
+        {{ (analytics$ | async)?.day || 0 }}
+      </div>
+      <div class="text-sm text-blue-600/70 dark:text-blue-400/70">
+        Detections
+      </div>
+    </div>
+
+    <!-- Weekly Stats -->
+    <div class="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+      <div class="text-sm text-purple-600 dark:text-purple-400">This Week</div>
+      <div class="text-2xl font-bold text-purple-700 dark:text-purple-300">
+        {{ (analytics$ | async)?.week || 0 }}
+      </div>
+      <div class="text-sm text-purple-600/70 dark:text-purple-400/70">
+        Detections
+      </div>
+    </div>
+
+    <!-- Monthly Stats -->
+    <div class="p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg">
+      <div class="text-sm text-emerald-600 dark:text-emerald-400">
+        This Month
+      </div>
+      <div class="text-2xl font-bold text-emerald-700 dark:text-emerald-300">
+        {{ (analytics$ | async)?.month || 0 }}
+      </div>
+      <div class="text-sm text-emerald-600/70 dark:text-emerald-400/70">
+        Detections
+      </div>
+    </div>
+  </div>
+
+  <!-- Last Detection -->
+  <div class="mt-6 text-sm text-gray-600 dark:text-gray-400">
+    Last Detection:
+    {{
+      (analytics$ | async)?.lastDetection
+        ? ((analytics$ | async)?.lastDetection | date: 'medium')
+        : 'No detections yet'
+    }}
+  </div>
+
+  <!-- Detection History -->
+  <div class="mt-6">
+    <h4 class="text-md font-semibold text-gray-700 dark:text-gray-300 mb-4">
+      Recent Detections
+    </h4>
+    <div class="space-y-2">
+      <div
+        *ngFor="let detection of (analytics$ | async)?.history"
+        class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg"
+      >
+        <div class="flex items-center gap-4">
+          <span class="text-sm font-medium text-gray-600 dark:text-gray-400">
+            Sensor {{ detection.sensor }}
+          </span>
+          <span class="text-sm text-red-500">
+            Value: {{ detection.value }}
+          </span>
+        </div>
+        <span class="text-sm text-gray-500 dark:text-gray-400">
+          {{ detection.date | date: 'medium' }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
