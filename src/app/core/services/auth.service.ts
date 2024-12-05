@@ -13,20 +13,12 @@ export class AuthService {
   isAuthenticated$ = this.isAuthenticated.asObservable();
 
   constructor(private readonly router: Router) {
-    // Move checkAuthState to constructor
     if (isPlatformBrowser(this.platformId)) {
       const token = localStorage.getItem(this.AUTH_KEY);
       if (token) {
         this.isAuthenticated.next(true);
       }
     }
-  }
-
-  private checkAuthState(): boolean {
-    if (!isPlatformBrowser(this.platformId)) {
-      return false;
-    }
-    return !!localStorage.getItem(this.AUTH_KEY);
   }
 
   login(username: string, password: string): boolean {
@@ -45,6 +37,8 @@ export class AuthService {
       localStorage.removeItem(this.AUTH_KEY);
     }
     this.isAuthenticated.next(false);
-    this.router.navigate(['/login']);
+    this.router
+      .navigate(['/login'])
+      .then(() => console.log('Navigated to login'));
   }
 }
