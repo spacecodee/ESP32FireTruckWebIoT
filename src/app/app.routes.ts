@@ -6,6 +6,7 @@ import { MainLayoutComponent } from './view/layouts/main-layout/main-layout.comp
 import { SensorPanelComponent } from './view/pages/sensor-panel/sensor-panel.component';
 import { SoundConfigComponent } from './view/pages/sound-config/sound-config.component';
 import { TruckControlComponent } from './view/pages/truck-control/truck-control.component';
+import { WifiResetComponent } from './view/pages/wifi-reset/wifi-reset.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -20,6 +21,7 @@ export const routes: Routes = [
       { path: 'sensors', component: SensorPanelComponent },
       { path: 'sound', component: SoundConfigComponent },
       { path: 'control', component: TruckControlComponent },
+      { path: 'wifi-reset', component: WifiResetComponent }, // Add this line
     ],
   },
 ];
