@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { ThemeToggleComponent } from '@shared/components/theme-toggle/theme-togg
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   username = '';
   password = '';
   error = '';
@@ -21,6 +21,15 @@ export class LoginComponent {
     private readonly auth: AuthService,
     private readonly router: Router,
   ) {}
+
+  ngOnInit(): void {
+    // Redirect if already logged in
+    this.auth.isAuthenticated$.subscribe((isAuth) => {
+      if (isAuth) {
+        this.router.navigate(['/config']).then((r) => console.log(r));
+      }
+    });
+  }
 
   onSubmit(): void {
     if (this.auth.login(this.username, this.password)) {

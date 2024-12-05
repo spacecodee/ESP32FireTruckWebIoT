@@ -6,11 +6,9 @@
   <div
     class="flex bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden w-full max-w-6xl"
   >
-    <!-- Changed max-w-4xl to max-w-6xl -->
-    <!-- Left Side - Image (smaller) -->
+    <!-- Left Side - Image -->
     <div class="hidden md:block w-2/5 relative min-h-[600px]">
-      <!-- Changed from w-1/2 to w-2/5 -->
-      <!-- Added min-height -->
+      <!-- Added relative position and min-height -->
       <img
         ngSrc="https://images.pexels.com/photos/303383/pexels-photo-303383.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
         alt="Fire truck"
@@ -21,37 +19,29 @@
       <div class="absolute inset-0 bg-blue-900/30"></div>
     </div>
 
-    <!-- Right Side - Login Form (larger) -->
+    <!-- Right Side - Login Form -->
     <div class="w-full md:w-3/5 p-16">
-      <!-- Changed from w-1/2 to w-3/5 and increased padding -->
       <div class="max-w-md mx-auto">
-        <!-- Center content with max width -->
         <!-- Theme Toggle -->
         <div class="absolute top-6 right-6">
-          <!-- Adjusted position -->
           <app-theme-toggle></app-theme-toggle>
         </div>
 
         <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">
-          <!-- Larger text and margin -->
           Login
         </h1>
 
         <form (ngSubmit)="onSubmit()" class="space-y-6">
-          <!-- Increased spacing -->
           <div>
             <label
               class="block text-base font-medium text-gray-700 dark:text-gray-300"
             >
-              <!-- Larger label text -->
               Username
               <div class="mt-2 relative">
-                <!-- Increased top margin -->
                 <span
                   class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-400 dark:text-gray-500"
                 >
                   <i class="fas fa-user text-lg"></i>
-                  <!-- Larger icon -->
                 </span>
                 <input
                   type="text"
@@ -87,7 +77,6 @@
           </div>
 
           <div *ngIf="error" class="text-red-500 text-base">
-            <!-- Larger error text -->
             <i class="fas fa-exclamation-circle mr-2"></i>
             {{ error }}
           </div>

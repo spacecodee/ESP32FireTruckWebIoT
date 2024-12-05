@@ -1,16 +1,15 @@
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { map } from 'rxjs/operators';
 
 export const authGuard = () => {
   const router = inject(Router);
   const authService = inject(AuthService);
 
-  let isAuthenticated = false;
-  authService.isAuthenticated$.subscribe((value) => (isAuthenticated = value));
-  if (isAuthenticated) {
-    return true;
-  }
-
-  return router.parseUrl('/login');
+  return authService.isAuthenticated$.pipe(
+    map((isAuthenticated) =>
+      isAuthenticated ? true : router.parseUrl('/login'),
+    ),
+  );
 };
