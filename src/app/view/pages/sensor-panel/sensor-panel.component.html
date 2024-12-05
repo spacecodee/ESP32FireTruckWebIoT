@@ -1,19 +1,11 @@
-<div class="space-y-6">
-  <!-- Header with last update -->
-  <div class="flex justify-between items-center">
-    <h2 class="text-2xl font-bold text-gray-800 dark:text-white">
-      Sensor Readings
-    </h2>
-    <div
-      class="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-2"
-    >
-      <i class="fas fa-clock"></i>
-      Last Update: {{ lastUpdate | date: 'medium' }}
-    </div>
-  </div>
+<div class="space-y-8">
+  <h2 class="text-2xl font-bold text-gray-800 dark:text-white">
+    Sensor Readings
+  </h2>
 
   <!-- Status Overview -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+    <!-- Added mb-8 -->
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
       <div class="flex items-center justify-between mb-4">
         <span class="text-gray-600 dark:text-gray-300">System Status</span>
@@ -72,8 +64,11 @@
     </div>
   </div>
 
-  <!-- Add Analytics -->
-  <app-fire-analytics></app-fire-analytics>
+  <!-- Analytics with more spacing -->
+  <div class="my-8">
+    <!-- Added vertical margin -->
+    <app-fire-analytics></app-fire-analytics>
+  </div>
 
   <!-- Detailed Sensor Readings -->
   <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
